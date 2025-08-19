@@ -27,11 +27,11 @@ const CtaStayInTouch = ({
   items = defaultItems,
 }: Cta4Props) => {
   return (
-    <section className="py-20">
+    <section className="py-10 md:py-20">
       <div className="container mx-auto">
         <div className="flex justify-center">
           <div>
-            <div className="flex flex-col items-start justify-between gap-8 rounded-lg bg-muted px-6 py-10 md:flex-row lg:px-20 lg:py-16">
+            <div className="flex flex-col items-start justify-between gap-8 rounded-lg bg-none sm:bg-muted px-6 py-10 md:flex-row lg:px-20 lg:py-16">
               <div className="md:w-1/2">
                 <h4 className="mb-1 text-2xl font-bold md:text-3xl">{title}</h4>
                 <p className="text-muted-foreground">{description}</p>

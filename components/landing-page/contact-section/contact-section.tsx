@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const FeatureHero = () => {
@@ -33,8 +34,10 @@ const FeatureHero = () => {
         </div>
 
         <div className="bg-gray-100 flex items-center justify-center rounded-lg h-full">
-          <img
+          <Image
             src="https://innovarehp.com/images/d305eac0ee842504f0f5f93932d6c008.jpg"
+            width={500}
+            height={500}
             alt="Feature Graphic"
             className="h-full object-cover"
           />

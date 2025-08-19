@@ -5,7 +5,9 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { getRandomColor } from "@/lib/utils";
 import AutoScroll from "embla-carousel-auto-scroll";
+import Image from "next/image";
 
 interface Testimonial {
   id: string;
@@ -53,31 +55,18 @@ const testimonials: Testimonial[] = [
   },
 ];
 
-// 🎨 Array of possible background colors
-const bgColors = [
-  "bg-red-100",
-  "bg-green-100",
-  "bg-blue-100",
-  "bg-yellow-100",
-  "bg-purple-100",
-  "bg-pink-100",
-  "bg-indigo-100",
-  "bg-orange-100",
-];
-
-const getRandomColor = () =>
-  bgColors[Math.floor(Math.random() * bgColors.length)];
-
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
-  const randomBg = getRandomColor(); // pick one each render
+  const randomBg = getRandomColor();
 
   return (
     <div
       className={`rounded-lg border border-gray-200 ${randomBg} p-6 shadow-md hover:shadow-lg transition h-full flex flex-col justify-between`}
     >
       <div className="flex items-center gap-4">
-        <img
+        <Image
           src={testimonial.avatar}
+          width={500}
+          height={500}
           alt={testimonial.name}
           className="w-12 h-12 rounded-full"
         />
@@ -106,7 +95,6 @@ const OurPartners = () => {
         </p>
       </div>
 
-      {/* Top carousel */}
       <div className="mt-16 relative mx-auto lg:max-w-7xl">
         <Carousel
           opts={{ loop: true }}
@@ -130,7 +118,6 @@ const OurPartners = () => {
         <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-50 to-transparent"></div>
       </div>
 
-      {/* Bottom carousel */}
       <div className="mt-10 relative mx-auto lg:max-w-7xl">
         <Carousel
           opts={{ loop: true }}

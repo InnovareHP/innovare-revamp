@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CtaStayInTouch from "../cta-stay-in-touch/cta-stay-in-touch";
 
 const MeetOurTeam = () => {
@@ -34,14 +35,7 @@ const MeetOurTeam = () => {
         "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=500&fit=crop&crop=face",
       backgroundColor: "bg-green-300",
     },
-    {
-      id: 5,
-      name: "Jessica Mitchell",
-      role: "CHIEF ADMINISTRATIVE OFFICER & GENERAL COUNSEL",
-      image:
-        "https://images.unsplash.com/photo-1494790108755-2616b612b093?w=400&h=500&fit=crop&crop=face",
-      backgroundColor: "bg-blue-400",
-    },
+
     {
       id: 6,
       name: "Robert Kim",
@@ -72,9 +66,11 @@ const MeetOurTeam = () => {
               <div
                 className={`relative overflow-hidden rounded-lg ${member.backgroundColor} mb-6`}
               >
-                <img
+                <Image
                   src={member.image}
                   alt={member.name}
+                  width={500}
+                  height={500}
                   className="w-full h-80 object-cover object-center transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
