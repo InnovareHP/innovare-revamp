@@ -1,0 +1,27 @@
+"use client";
+import animationData from "@/public/animation.json";
+import Lottie from "lottie-react";
+
+const HeroSection = () => {
+  return (
+    <section className="relative z-40">
+      <Lottie
+        className="w-full h-full"
+        animationData={animationData}
+        loop={true}
+        autoplay={true}
+      />
+      <div className="absolute inset-0 bg-black/50" />
+
+      <div className="absolute top-1/3 left-10 right-0 p-4 text-white">
+        <h1 className="text-[200px] font-bold stroke-text">Innovation</h1>
+
+        <p className="text-5xl font-bold">
+          Shaping the Future of Healthcare Marketing
+        </p>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
