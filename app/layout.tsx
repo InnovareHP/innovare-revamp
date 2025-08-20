@@ -46,7 +46,15 @@ export default async function RootLayout({
   return (
     <html lang="en" color-scheme="light" suppressHydrationWarning>
       <link rel="icon" href="/favicon.ico" />
-      <link rel="url" href="https://calendly.com/markivor-glorioso/30min" />
+      <link rel="preconnect" href="https://calendly.com" />
+      <link
+        rel="preload"
+        href="/animation.json"
+        as="fetch"
+        type="application/json"
+        crossOrigin="anonymous"
+      />
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

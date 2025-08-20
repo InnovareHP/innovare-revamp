@@ -9,17 +9,17 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { ADMIN } from "@/lib/constant";
+import { OWNER } from "@/lib/constant";
 import Image from "next/image";
 import { useUser } from "../provider/app-provider";
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { session, activeTeam } = useUser();
+  const { session, member, activeTeam } = useUser();
 
   const navigationItems = [
-    ...(session?.user?.role === ADMIN
+    ...(member?.role === OWNER
       ? [
           {
             title: "Dashboard",

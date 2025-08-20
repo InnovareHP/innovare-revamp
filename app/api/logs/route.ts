@@ -5,9 +5,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth.api.getSession({ headers: request.headers });
+    const member = await auth.api.getActiveMember({ headers: request.headers });
 
-    if (!session) {
+    if (!member) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -20,7 +20,11 @@ export async function GET(request: NextRequest) {
     const parsedDateType = dateType;
     const parsedSearch = search;
 
-    const whereClause: Prisma.company_log_tableWhereInput = {};
+    const whereClause: Prisma.company_log_tableWhereInput = {
+      member: {
+        id: member.id,
+      },
+    };
 
     if (parsedDateType && parsedDateType !== "all") {
       const days = parseInt(parsedDateType, 10);

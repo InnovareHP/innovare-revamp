@@ -6,14 +6,13 @@ import Image from "next/image";
 
 const HeroSection = () => {
   return (
-    <section className="relative z-40 min-h-screen lg:min-h-0">
+    <section className="relative z-40 min-h-screen lg:min-h-fit">
       <Lottie
-        className="w-full h-full hidden lg:block"
+        className="w-full object-cover hidden lg:block"
         animationData={animationData}
-        loop={true}
-        autoplay={true}
+        loop
+        autoplay
       />
-
       <Image
         src="https://innovarehp.com/images/656d3779371df12b332b2a473fe3f7f9.jpg"
         alt="Hero Section"

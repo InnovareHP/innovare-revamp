@@ -1,5 +1,7 @@
+import TeamPage from "@/components/team-page/team-page";
+
 const page = () => {
-  return <div>page</div>;
+  return <TeamPage />;
 };
 
 export default page;

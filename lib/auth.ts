@@ -2,6 +2,7 @@ import { render } from "@react-email/render";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { haveIBeenPwned, organization } from "better-auth/plugins";
+import InvitationEmail from "./email/invitation";
 import { MagicLink } from "./email/magic-link";
 import { prisma } from "./prisma";
 import { resend } from "./resend";
@@ -10,6 +11,28 @@ export const auth = betterAuth({
   appName: process.env.APP_NAME,
   advanced: {
     cookiePrefix: `${process.env.APP_NAME}-AUTH`,
+  },
+  databaseHooks: {
+    session: {
+      create: {
+        before: async (session) => {
+          const organization = await prisma.member_table.findFirst({
+            where: {
+              userId: session.userId,
+            },
+            select: {
+              organizationId: true,
+            },
+          });
+          return {
+            data: {
+              ...session,
+              activeOrganizationId: organization?.organizationId,
+            },
+          };
+        },
+      },
+    },
   },
   user: {
     modelName: "user_table",
@@ -83,7 +106,7 @@ export const auth = betterAuth({
     sendVerificationEmail: async ({ url, user, token }) => {
       const tokenUrl = `${url}?token=${token}`;
       await resend.emails.send({
-        from: "InnovareHP <onboarding@resend.dev>",
+        from: "InnovareHP <no-reply@portfolio-glorioso.site>",
         to: user.email,
         subject: "Verify your InnovareHP account",
         html: await render(MagicLink({ magicLink: tokenUrl })),
@@ -101,6 +124,24 @@ export const auth = betterAuth({
   },
   plugins: [
     organization({
+      sendInvitationEmail: async (data) => {
+        await resend.emails.send({
+          from: "InnovareHP <no-reply@portfolio-glorioso.site>",
+          to: data.email,
+          subject: `Invitation to join ${data.organization.name}`,
+          html: await render(
+            InvitationEmail({
+              invitation: {
+                email: data.email,
+                organizationName: data.organization.name,
+                inviterName: data.inviter.user.name,
+                inviteLink: `http://localhost:3000/invitation/accept?token=${data.invitation.id}`,
+                rejectLink: `http://localhost:3000/invitation/reject?token=${data.invitation.id}`,
+              },
+            })
+          ),
+        });
+      },
       schema: {
         organization: {
           modelName: "organization_table",

@@ -47,16 +47,16 @@ export function RegisterForm({
         email: data.email,
         password: data.password,
         name: data.name,
-        callbackURL: "/dashboard",
+        callbackURL: "/callback",
       });
 
       if (response.error) {
         return toast.error(response.error.message);
       }
 
-      toast.success("Login successful");
+      toast.success("Account created successfully");
     } catch (error) {
-      toast.error("Login successful");
+      toast.error("Failed to create account");
     }
   };
 
