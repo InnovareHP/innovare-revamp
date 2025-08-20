@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/carousel";
 import { getRandomColor } from "@/lib/utils";
 import AutoScroll from "embla-carousel-auto-scroll";
+import { motion } from "framer-motion";
 import Image from "next/image";
 
 interface Testimonial {
@@ -55,11 +56,19 @@ const testimonials: Testimonial[] = [
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
+
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
   const randomBg = getRandomColor();
 
   return (
-    <div
+    <motion.div
+      variants={cardVariants}
+      whileHover={{ scale: 1.03 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className={`rounded-lg border border-gray-200 ${randomBg} p-6 shadow-md hover:shadow-lg transition h-full flex flex-col justify-between`}
     >
       <div className="flex items-center gap-4">
@@ -76,14 +85,20 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => {
         </div>
       </div>
       <p className="mt-4 text-gray-800 italic">“{testimonial.text}”</p>
-    </div>
+    </motion.div>
   );
 };
 
 const OurPartners = () => {
   return (
-    <section className="bg-gray-50 py-20">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+    <section className="bg-gray-50 py-20 overflow-hidden">
+      <motion.div
+        className="max-w-7xl mx-auto px-6 lg:px-8 text-center"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
           Meet our happy clients
         </h2>
@@ -93,9 +108,16 @@ const OurPartners = () => {
           with a specific target audience or community, with the ultimate aim of
           achieving well-defined goals.
         </p>
-      </div>
+      </motion.div>
 
-      <div className="mt-16 relative mx-auto lg:max-w-7xl">
+      {/* Top carousel */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ staggerChildren: 0.2 }}
+        className="mt-16 relative mx-auto lg:max-w-7xl"
+      >
         <Carousel
           opts={{ loop: true }}
           plugins={[
@@ -116,9 +138,16 @@ const OurPartners = () => {
 
         <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-gray-50 to-transparent"></div>
         <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-50 to-transparent"></div>
-      </div>
+      </motion.div>
 
-      <div className="mt-10 relative mx-auto lg:max-w-7xl">
+      {/* Bottom carousel */}
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        transition={{ staggerChildren: 0.2 }}
+        className="mt-10 relative mx-auto lg:max-w-7xl"
+      >
         <Carousel
           opts={{ loop: true }}
           plugins={[
@@ -139,7 +168,7 @@ const OurPartners = () => {
 
         <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-gray-50 to-transparent"></div>
         <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-gray-50 to-transparent"></div>
-      </div>
+      </motion.div>
     </section>
   );
 };

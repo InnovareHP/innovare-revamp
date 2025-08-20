@@ -18,8 +18,42 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "InnovareHP",
-  description: "InnovareHP",
+  title: "InnovareHP | Hospital Marketing Made Simple & Strategic",
+  description:
+    "InnovareHP helps hospitals grow with a proven 4-step process: Kickoff, Strategy, Action, and Growth. From digital marketing to boots-on-the-ground outreach, we craft tailored campaigns that attract patients and build lasting community trust.",
+  keywords: [
+    "hospital marketing",
+    "healthcare growth strategy",
+    "medical marketing",
+    "patient engagement",
+    "hospital SEO",
+    "healthcare PR",
+    "referral development",
+  ],
+  openGraph: {
+    title: "InnovareHP | Hospital Marketing Made Simple & Strategic",
+    description:
+      "Discover InnovareHP’s 4-Point Collab Process: purpose-built hospital marketing strategies combining digital tools, community outreach, and growth consulting.",
+    url: "https://innovarehp.com",
+    siteName: "InnovareHP",
+    images: [
+      {
+        url: "https://innovarehp.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "InnovareHP 4-Point Collab Process",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "InnovareHP | Smarter Hospital Marketing",
+    description:
+      "From SEO to community outreach, InnovareHP helps hospitals attract patients and grow with a 4-step proven process.",
+    images: ["https://innovarehp.com/og-image.png"],
+  },
 };
 
 export default async function RootLayout({

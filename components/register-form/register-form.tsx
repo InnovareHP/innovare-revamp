@@ -70,7 +70,7 @@ export function RegisterForm({
                 <div className="flex flex-col items-center text-center">
                   <h1 className="text-2xl font-bold">Create an account</h1>
                   <p className="text-muted-foreground text-balance">
-                    Create an account
+                    Join the team and start tracking your time
                   </p>
                 </div>
                 <FormField

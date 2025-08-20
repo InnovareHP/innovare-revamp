@@ -9,9 +9,6 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-
 import {
   Sheet,
   SheetContent,
@@ -21,9 +18,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (window.innerWidth < 768) return;
@@ -43,26 +45,43 @@ const Navigation = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 max-w-2xl mx-auto rounded-b-2xl transition-colors duration-300 ${
-        isScrolled ? "bg-white shadow-sm" : "bg-transparent"
+        pathname === "/"
+          ? isScrolled
+            ? "bg-white shadow-sm"
+            : "bg-transparent"
+          : "bg-white shadow-sm"
       }`}
     >
       <div className="mx-auto max-w-5xl flex items-center justify-between md:justify-center px-6 py-4">
         <div className="flex items-center space-x-2">
-          <div className="w-6 h-6 bg-black rounded-sm flex items-center justify-center">
-            <div className="w-3 h-3 bg-white rounded-sm"></div>
-          </div>
+          <Image
+            src="/assets/logo.png"
+            alt="InnovareHP"
+            width={60}
+            height={60}
+          />
         </div>
 
         <NavigationMenu className="hidden md:block">
           <NavigationMenuList
-            className={isScrolled ? "text-gray-800" : "text-white"}
+            className={
+              pathname === "/"
+                ? isScrolled
+                  ? "text-gray-800"
+                  : "text-white"
+                : "text-gray-800"
+            }
           >
             <NavigationMenuItem>
               <Link href="/login">
                 <Button
                   variant="ghost"
                   className={`h-9 px-3 text-sm font-medium ${
-                    isScrolled ? "text-gray-800" : "text-white"
+                    pathname === "/"
+                      ? isScrolled
+                        ? "text-gray-800"
+                        : "text-white"
+                      : "text-gray-800"
                   }`}
                 >
                   Home
@@ -143,7 +162,11 @@ const Navigation = () => {
                 <Button
                   variant="ghost"
                   className={`h-9 px-3 text-sm font-medium ${
-                    isScrolled ? "text-gray-800" : "text-white"
+                    pathname === "/"
+                      ? isScrolled
+                        ? "text-gray-800"
+                        : "text-white"
+                      : "text-gray-800"
                   }`}
                 >
                   Team
@@ -155,7 +178,11 @@ const Navigation = () => {
                 <Button
                   variant="ghost"
                   className={`h-9 px-3 text-sm font-medium ${
-                    isScrolled ? "text-gray-800" : "text-white"
+                    pathname === "/"
+                      ? isScrolled
+                        ? "text-gray-800"
+                        : "text-white"
+                      : "text-gray-800"
                   }`}
                 >
                   Log in

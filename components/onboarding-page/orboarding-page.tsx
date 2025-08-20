@@ -133,17 +133,17 @@ export default function OnboardingPage() {
       ];
     } else {
       return [
-        { value: "software-developer", label: "Software Developer" },
-        { value: "frontend-developer", label: "Frontend Developer" },
-        { value: "backend-developer", label: "Backend Developer" },
-        { value: "fullstack-developer", label: "Fullstack Developer" },
-        { value: "ui-ux-designer", label: "UI/UX Designer" },
-        { value: "product-manager", label: "Product Manager" },
-        { value: "data-analyst", label: "Data Analyst" },
-        { value: "marketing-specialist", label: "Marketing Specialist" },
-        { value: "sales-representative", label: "Sales Representative" },
-        { value: "qa-engineer", label: "QA Engineer" },
-        { value: "devops-engineer", label: "DevOps Engineer" },
+        { value: "Software Developer", label: "Software Developer" },
+        { value: "Frontend Developer", label: "Frontend Developer" },
+        { value: "Backend Developer", label: "Backend Developer" },
+        { value: "Fullstack Developer", label: "Fullstack Developer" },
+        { value: "UI/UX Designer", label: "UI/UX Designer" },
+        { value: "Product Manager", label: "Product Manager" },
+        { value: "Data Analyst", label: "Data Analyst" },
+        { value: "Marketing Specialist", label: "Marketing Specialist" },
+        { value: "Sales Representative", label: "Sales Representative" },
+        { value: "QA Engineer", label: "QA Engineer" },
+        { value: "DevOps Engineer", label: "DevOps Engineer" },
         { value: "other", label: "Other" },
       ];
     }

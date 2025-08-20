@@ -27,20 +27,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             url: `/${activeTeam?.slug}/dashboard`,
           },
           {
-            title: "Employees",
+            title: "Team Management",
             icon: Users,
-            url: `/${activeTeam?.slug}/employees`,
-          },
-
-          {
-            title: "Time Off",
-            icon: Clock,
-            url: `/${activeTeam?.slug}/time-off`,
+            url: `/${activeTeam?.slug}`,
           },
           {
             title: "Attendance",
             icon: Calendar,
-            url: "/attendance",
+            url: `/${activeTeam?.slug}/attendance/manage`,
           },
         ]
       : [
