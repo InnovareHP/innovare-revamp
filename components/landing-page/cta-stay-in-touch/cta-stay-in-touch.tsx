@@ -23,7 +23,7 @@ const CtaStayInTouch = ({
   title = "Stay in Touch",
   description = "We're here to help you every step of the way. Let's talk about how we can help you achieve your goals.",
   buttonText = "We'd love to hear from you",
-  buttonUrl = "/stay-in-touch",
+  buttonUrl = "/get-in-touch",
   items = defaultItems,
 }: Cta4Props) => {
   return (
