@@ -12,6 +12,12 @@ export const admin = ac.newRole({
   ...adminAc.statements,
 });
 
-export const member = ac.newRole({
+export const employee = ac.newRole({
+  user: ["update"],
+  project: ["create", "update", "delete"],
+});
+
+export const client = ac.newRole({
+  user: ["update", "set-role"],
   project: ["create", "update", "delete"],
 });

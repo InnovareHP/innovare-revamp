@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface Footer7Props {
@@ -56,12 +57,18 @@ const defaultSections = [
 
 const FooterSection = ({
   sections = defaultSections,
-  description = "A collection of components for your startup business or side project.",
+  description = "InnovareHP is a healthcare marketing agency that helps hospitals grow with a proven 4-step process: Kickoff, Strategy, Action, and Growth. From digital marketing to boots-on-the-ground outreach, we craft tailored campaigns that attract patients and build lasting community trust.",
 }: Footer7Props) => {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-left">
+          <Image
+            src="/assets/logo.png"
+            alt="InnovareHP"
+            width={60}
+            height={60}
+          />
           <div className="flex w-full flex-col justify-between gap-6 lg:items-start">
             <p className="text-muted-foreground max-w-[70%] text-sm">
               {description}
