@@ -1,8 +1,10 @@
+import { render } from "@react-email/render";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { admin, haveIBeenPwned } from "better-auth/plugins";
-import { admin as adminRole, member } from "./permission";
+import { haveIBeenPwned, organization } from "better-auth/plugins";
+import { MagicLink } from "./email/magic-link";
 import { prisma } from "./prisma";
+import { resend } from "./resend";
 
 export const auth = betterAuth({
   appName: process.env.APP_NAME,
@@ -19,7 +21,6 @@ export const auth = betterAuth({
       image: "user_image",
       createdAt: "user_created_at",
       updatedAt: "user_updated_at",
-      role: "user_role",
       banned: "user_banned",
       banReason: "user_ban_reason",
       banExpires: "user_ban_expires",
@@ -28,16 +29,6 @@ export const auth = betterAuth({
       phoneNumberVerified: "user_phone_number_verified",
       twoFactorEnabled: "user_two_factor_enabled",
       accounts: "user_account_tables",
-    },
-    additionalFields: {
-      user_is_onboarded: {
-        type: "boolean",
-        defaultValue: false,
-      },
-      user_phone_number: {
-        type: "string",
-        defaultValue: "",
-      },
     },
   },
   account: {
@@ -85,17 +76,19 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-  socialProviders: {
-    google: {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    },
-  },
-
   emailVerification: {
     sendOnSignUp: true,
     autoSignInAfterVerification: false,
     expiresIn: 1000 * 60 * 10,
+    sendVerificationEmail: async ({ url, user, token }) => {
+      const tokenUrl = `${url}?token=${token}`;
+      await resend.emails.send({
+        from: "InnovareHP <onboarding@resend.dev>",
+        to: user.email,
+        subject: "Verify your InnovareHP account",
+        html: await render(MagicLink({ magicLink: tokenUrl })),
+      });
+    },
   },
   rateLimit: {
     enabled: true,
@@ -107,41 +100,68 @@ export const auth = betterAuth({
     requireEmailVerification: true,
   },
   plugins: [
-    admin({
+    organization({
       schema: {
-        user: {
+        organization: {
+          modelName: "organization_table",
           fields: {
-            role: "user_role",
-            banned: "user_banned",
-            banReason: "user_ban_reason",
-            banExpires: "user_ban_expires",
+            id: "organization_id",
+            name: "organization_name",
+            slug: "organization_slug",
+            logo: "organization_logo",
+            metadata: "organization_metadata",
+            createdAt: "organization_created_at",
+            updatedAt: "organization_updated_at",
+          },
+        },
+        session: {
+          fields: {
+            activeOrganizationId: "session_active_organization_id",
+            activeTeamId: "session_active_team_id",
+          },
+        },
+        member: {
+          modelName: "member_table",
+          fields: {
+            id: "member_id",
+            name: "member_name",
+            email: "member_email",
+            role: "member_role",
+            createdAt: "member_created_at",
+            updatedAt: "member_updated_at",
+          },
+          additionalFields: {
+            member_is_onboarded: {
+              type: "boolean",
+              defaultValue: false,
+            },
+            member_position: {
+              type: "string",
+              defaultValue: "",
+            },
+            member_bio: {
+              type: "string",
+              defaultValue: "",
+            },
+          },
+        },
+        invitation: {
+          modelName: "invitation_table",
+          fields: {
+            id: "invitation_id",
+            organizationId: "organization_id",
+            organization: "invitation_organization",
+            email: "invitation_email",
+            role: "invitation_role",
+            status: "invitation_status",
+            expiresAt: "invitation_expires_at",
+            inviterId: "invitation_inviter_id",
           },
         },
       },
-      // ac,
-      adminRoles: ["admin"],
-      roles: {
-        admin: adminRole,
-        member: member,
-      },
-      defaultRole: "seeker",
     }),
     haveIBeenPwned(),
-    //   magicLink({
-    //     sendMagicLink: async ({ email, url, token }) => {
-    //       const tokenUrl = `${url}?token=${token}`;
-    //       await sendEmail({
-    //         to: email,
-    //         subject: "Login to your account",
-    //         html: ConfirmationEmail({
-    //           magicLink: tokenUrl,
-    //         }),
-    //         from: `${appConfig.APP_EMAIL}`,
-    //       });
-    //     },
-    //   }),
   ],
-  // secondaryStorage: {
   //   get: async (key) => {
   //     const value = await redis.get(key);
   //     return value ? value : null;
@@ -158,9 +178,7 @@ export const auth = betterAuth({
     auth: {
       schema: "auth_schema",
     },
-    stripe: {
-      schema: "stripe_schema",
-    },
+
     public: {
       schema: "public",
     },

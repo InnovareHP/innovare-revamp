@@ -1,5 +1,10 @@
+import { UserProvider } from "@/components/provider/app-provider";
+import { auth } from "@/lib/auth";
+import { BetterRespose, MemberAuth } from "@/lib/type";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { headers } from "next/headers";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,19 +22,39 @@ export const metadata: Metadata = {
   description: "InnovareHP",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const rawHeaders = await headers();
+
+  let user: BetterRespose | null = null;
+  let member: MemberAuth | null = null;
+
+  try {
+    //@ts-expect-error - TODO: fix this
+    [user, member] = await Promise.all([
+      auth.api.getSession({ headers: rawHeaders }),
+      auth.api.getActiveMember({ headers: rawHeaders }),
+    ]);
+  } catch (error) {
+    user = null;
+    member = null;
+  }
+
   return (
-    <html lang="en" color-scheme="light" className="" suppressHydrationWarning>
+    <html lang="en" color-scheme="light" suppressHydrationWarning>
       <link rel="icon" href="/favicon.ico" />
       <link rel="url" href="https://calendly.com/markivor-glorioso/30min" />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <UserProvider session={user} member={member}>
+          {children}
+        </UserProvider>
+
+        <Toaster />
       </body>
     </html>
   );
