@@ -91,7 +91,7 @@ const TimeLogsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen p-6 bg-gray-50 rounded-xl">
+    <div className="min-h-screen p-6rounded-xl">
       <div className="max-w-7xl mx-auto px-6 space-y-8">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -114,7 +114,7 @@ const TimeLogsPage = () => {
                   <div className="text-red-500">{item.icon}</div>
 
                   <div className="text-gray-600 text-2xl font-bold">
-                    {item.value}
+                    {item.value ?? 0}
                   </div>
                 </div>
               </CardContent>

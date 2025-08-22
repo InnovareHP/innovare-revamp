@@ -76,9 +76,8 @@ const MeetOurTeam = () => {
   ];
 
   return (
-    <section className="py-20 bg-gray-200">
+    <section id="team" className="py-20 bg-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Meet Our Leadership Team
@@ -90,7 +89,6 @@ const MeetOurTeam = () => {
           </p>
         </div>
 
-        {/* Team Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
           {teamMembers.map((member, idx) => (
             <motion.div
@@ -112,32 +110,8 @@ const MeetOurTeam = () => {
                   loading="lazy"
                   className="w-[400px] h-[400px] object-cover object-center rounded-lg transition-transform duration-300 group-hover:scale-105"
                 />
-
-                {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center text-center px-4">
-                  <p className="text-white text-sm mb-3">{member.bio}</p>
-                  <div className="flex space-x-4">
-                    {member.socials.linkedin && (
-                      <a
-                        href={member.socials.linkedin}
-                        className="text-white hover:text-yellow-400 text-sm"
-                      >
-                        LinkedIn
-                      </a>
-                    )}
-                    {member.socials.twitter && (
-                      <a
-                        href={member.socials.twitter}
-                        className="text-white hover:text-yellow-400 text-sm"
-                      >
-                        Twitter
-                      </a>
-                    )}
-                  </div>
-                </div>
               </div>
 
-              {/* Member Name & Role */}
               <div className="text-center">
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   {member.name}
@@ -151,7 +125,6 @@ const MeetOurTeam = () => {
         </div>
       </div>
 
-      {/* CTA */}
       <CtaStayInTouch />
     </section>
   );

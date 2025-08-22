@@ -31,6 +31,7 @@ export function NavMain({
     items?: {
       title: string;
       url: string;
+      icon?: LucideIcon;
     }[];
   }[];
 }) {
@@ -93,10 +94,13 @@ export function NavMain({
                           className={cn(
                             "text-sm pl-8 py-2 rounded-md",
                             pathname === subItem.url &&
-                              "bg-green-50 text-green-700 font-medium"
+                              "bg-primary text-white font-medium"
                           )}
                         >
                           <Link href={subItem.url}>
+                            {subItem.icon && (
+                              <subItem.icon className="w-5 h-5" />
+                            )}
                             <span>{subItem.title}</span>
                           </Link>
                         </SidebarMenuSubButton>

@@ -127,7 +127,6 @@ const ProfilePage = () => {
       toast.success("Profile picture updated successfully!");
     } catch (error) {
       toast.error("Failed to update profile picture");
-      console.error(error);
     } finally {
       setIsUploadingAvatar(false);
     }
@@ -163,14 +162,12 @@ const ProfilePage = () => {
       toast.success("Profile updated successfully!");
     } catch (error) {
       toast.error("Failed to update profile");
-      console.error(error);
     }
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gray-50 rounded-xl">
-      <div className="max-w-6xl mx-auto px-6 space-y-8">
-        {/* Header with breadcrumb style */}
+    <div className="min-h-screen p-6rounded-xl">
+      <div className="max-w-7xl mx-auto px-6 space-y-8">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
@@ -181,12 +178,10 @@ const ProfilePage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Sidebar */}
           <div className="lg:col-span-1">
             <Card className="shadow-lg border-0">
               <CardContent className="pt-6">
                 <div className="text-center space-y-4">
-                  {/* Avatar with loading state */}
                   <div className="relative inline-block">
                     <Avatar className="w-24 h-24 ring-4 ring-white shadow-lg">
                       <AvatarImage

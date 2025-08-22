@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 interface Column<T> {
   key: keyof T | string;
@@ -43,7 +44,7 @@ export function ReusableTable<T>({
 
   return (
     <div className="w-full">
-      <div className="overflow-x-auto">
+      <ScrollArea>
         <Table>
           <TableHeader>
             <TableRow>
@@ -90,7 +91,8 @@ export function ReusableTable<T>({
             )}
           </TableBody>
         </Table>
-      </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
 
       {/* Pagination */}
       {onPageChange && totalPages > 1 && (

@@ -47,15 +47,25 @@ export const createAttendance = async (formData: AttendanceFormValues) => {
           company_log_member_id: memberId,
           company_log_time_out: null,
           company_log_created_at: {
-            gte: new Date(new Date().setHours(0, 0, 0, 0)),
+            gte: new Date(new Date().setHours(0, 0, 0, 0)), // start of today
           },
         },
       });
 
+      const timeOut = new Date();
+      const timeIn = new Date(log.company_log_time_in);
+
+      const diffMs = timeOut.getTime() - timeIn.getTime();
+
+      const diffHours = diffMs / (1000 * 60 * 60);
+
       await Promise.all([
         prisma.company_log_table.update({
-          where: { id: log?.id },
-          data: { company_log_time_out: new Date() },
+          where: { id: log.id },
+          data: {
+            company_log_time_out: timeOut,
+            company_log_total_hours: diffHours,
+          },
         }),
         sendTeamsNotification(
           timeType,

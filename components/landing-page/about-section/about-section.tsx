@@ -1,81 +1,38 @@
 "use client";
 
+import { addViewer } from "@/app/(public)/blog/[slug]/action";
+import { formatDate } from "@/lib/helper";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-type MasonryImage = {
-  src: string;
-  title: string;
-  date: string;
-};
-
-const MasonrySection = () => {
-  const images: MasonryImage[] = [
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image.jpg",
-      title: "Exploring Design Trends",
-      date: "Jan 12, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-1.jpg",
-      title: "Creative Layouts",
-      date: "Jan 14, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-2.jpg",
-      title: "Modern Workspaces",
-      date: "Jan 15, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-3.jpg",
-      title: "Urban Inspiration",
-      date: "Jan 16, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-4.jpg",
-      title: "Cozy Interiors",
-      date: "Jan 18, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-5.jpg",
-      title: "Nature & Balance",
-      date: "Jan 20, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-6.jpg",
-      title: "Creative Studio",
-      date: "Jan 21, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-7.jpg",
-      title: "Lifestyle Picks",
-      date: "Jan 23, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-8.jpg",
-      title: "Calm Corners",
-      date: "Jan 25, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-9.jpg",
-      title: "Architecture Shots",
-      date: "Jan 26, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-10.jpg",
-      title: "Vintage Aesthetic",
-      date: "Jan 27, 2025",
-    },
-    {
-      src: "https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-11.jpg",
-      title: "Coastal Vibes",
-      date: "Jan 28, 2025",
-    },
-  ];
-
-  const columns: MasonryImage[][] = [[], [], []];
-  images.forEach((img, i) => {
+const MasonrySection = ({
+  blogs,
+}: {
+  blogs: {
+    company_blog_id: string;
+    company_blog_title: string;
+    company_blog_featured_image: string | null;
+    company_blog_created_at: Date;
+    company_blog_slug: string;
+  }[];
+}) => {
+  const router = useRouter();
+  const columns: {
+    company_blog_id: string;
+    company_blog_title: string;
+    company_blog_featured_image: string | null;
+    company_blog_created_at: Date;
+    company_blog_slug: string;
+  }[][] = [[], [], []];
+  blogs.forEach((img, i) => {
     columns[i % 3].push(img);
   });
+
+  const handleViewBlog = async (slug: string) => {
+    await addViewer(slug);
+    router.push(`/blog/${slug}`);
+  };
 
   return (
     <section className="bg-gray-50 py-16">
@@ -96,6 +53,7 @@ const MasonrySection = () => {
               {col.map((img, imgIndex) => (
                 <motion.div
                   key={imgIndex}
+                  onClick={() => handleViewBlog(img.company_blog_slug)}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{
@@ -106,14 +64,20 @@ const MasonrySection = () => {
                   viewport={{ once: true }}
                   className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition hover:scale-105 cursor-pointer"
                 >
-                  <img
+                  <Image
+                    width={500}
+                    height={500}
                     className="h-auto w-full flex-1"
-                    src={img.src}
-                    alt={img.title}
+                    src={img.company_blog_featured_image ?? ""}
+                    alt={img.company_blog_title}
                   />
                   <div className="p-3 flex-1">
-                    <h3 className="font-medium text-sm">{img.title}</h3>
-                    <p className="text-gray-500 text-xs">{img.date}</p>
+                    <h3 className="font-medium text-sm">
+                      {img.company_blog_title}
+                    </h3>
+                    <p className="text-gray-500 text-xs">
+                      {formatDate(img.company_blog_created_at)}
+                    </p>
                   </div>
                 </motion.div>
               ))}

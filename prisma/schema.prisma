@@ -15,6 +15,15 @@ datasource db {
   schemas  = ["auth_schema", "public", "company_schema"]
 }
 
+
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+
+  @@schema("company_schema")
+}
+
+
 model User_table {
   id                  String               @id @default(uuid())
   user_name           String              
@@ -113,6 +122,7 @@ model Member_table {
   member_bio          String?
 
   company_log_table company_log_table[]
+  company_blog_table company_blog_table[]
 
   @@map("member_table")
   @@schema("auth_schema")
@@ -139,6 +149,7 @@ model company_log_table {
   company_log_created_at DateTime              @default(now())
   company_log_time_in DateTime                 @default(now())
   company_log_time_out DateTime?             
+  company_log_total_hours Int?
   company_log_member_id String
 
   member              Member_table            @relation(fields: [company_log_member_id], references: [id], onDelete: Cascade)
@@ -158,3 +169,65 @@ model company_log_task_table {
   @@schema("company_schema")
 }
 
+model company_blog_table {
+  company_blog_id        String    @id @default(uuid())
+  company_blog_title                  String
+  company_blog_slug                   String    @unique
+  company_blog_excerpt                String?   
+  company_blog_content                String    
+  company_blog_featured_image         String?   
+  company_blog_status                 BlogStatus @default(DRAFT)
+  company_blog_meta_title             String?
+  company_blog_meta_description       String?
+  company_blog_meta_keywords          String?
+  
+  company_blog_category               String?
+  company_blog_tags                   company_blog_tag[]     @relation("BlogTags")
+
+
+  company_blog_created_at             DateTime  @default(now())
+  company_blog_updated_at             DateTime  @updatedAt
+  company_blog_published_at           DateTime?
+
+  company_blog_views Int @default(0)
+  company_blog_likes Int @default(0)
+
+  company_blog_member_id String
+  member                 Member_table @relation(fields: [company_blog_member_id], references: [id])
+
+  @@schema("company_schema")
+}
+
+
+model company_blog_tag {
+  company_blog_tag_id    String  @id @default(uuid())
+  company_blog_tag_name  String
+  company_blog_tag_blogs company_blog_table[] @relation("BlogTags")
+
+  @@schema("company_schema")
+}
+
+model company_client_table {
+  company_client_id String @id @default(uuid())
+  company_client_name String
+  company_client_description String
+  company_client_category String
+  company_client_created_at DateTime @default(now())
+  company_client_updated_at DateTime @default(now())
+  company_client_member_id String
+
+  @@schema("company_schema")
+}
+
+model company_get_in_touch_table {
+  company_get_in_touch_id String @id @default(uuid())
+  company_get_in_touch_name String
+  company_get_in_touch_email String
+  company_get_in_touch_phone String
+  company_get_in_touch_online_presence String
+  company_get_in_touch_contact_method String
+  company_get_in_touch_message String
+  company_get_in_touch_created_at DateTime @default(now())
+
+  @@schema("company_schema")
+}

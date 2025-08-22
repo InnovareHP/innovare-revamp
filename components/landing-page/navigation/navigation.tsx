@@ -1,13 +1,12 @@
 "use client";
 
+import { useUser } from "@/components/provider/app-provider";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
@@ -24,6 +23,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const Navigation = () => {
+  const { session } = useUser();
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -73,7 +73,7 @@ const Navigation = () => {
             }
           >
             <NavigationMenuItem>
-              <Link href="/login">
+              <Link href="/">
                 <Button
                   variant="ghost"
                   className={`h-9 px-3 text-sm font-medium ${
@@ -90,75 +90,25 @@ const Navigation = () => {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="bg-transparent">
+              <NavigationMenuLink
+                href="#services"
+                className="text-sm font-medium"
+              >
                 Services
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-4 p-6 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="/"
-                        className="block rounded-md p-3 hover:bg-gray-50 transition"
-                      >
-                        <p className="text-sm font-medium">Case Studies</p>
-                        <p className="text-xs text-gray-500">
-                          Real-world success stories
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="/"
-                        className="block rounded-md p-3 hover:bg-gray-50 transition"
-                      >
-                        <p className="text-sm font-medium">Blog</p>
-                        <p className="text-xs text-gray-500">
-                          Insights & trends
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="/"
-                        className="block rounded-md p-3 hover:bg-gray-50 transition"
-                      >
-                        <p className="text-sm font-medium">Whitepapers</p>
-                        <p className="text-xs text-gray-500">
-                          In-depth research
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        href="/"
-                        className="block rounded-md p-3 hover:bg-gray-50 transition"
-                      >
-                        <p className="text-sm font-medium">Templates</p>
-                        <p className="text-xs text-gray-500">
-                          Ready-to-use tools
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
+              </NavigationMenuLink>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuLink href="/" className="text-sm font-medium">
+              <NavigationMenuLink
+                href="#clients"
+                className="text-sm font-medium"
+              >
                 Clients
               </NavigationMenuLink>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <Link href="/login">
+              <Link href="#team">
                 <Button
                   variant="ghost"
                   className={`h-9 px-3 text-sm font-medium ${
@@ -174,7 +124,7 @@ const Navigation = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link href="/login">
+              <Link href={`${session ? "/callback" : "/login"}`}>
                 <Button
                   variant="ghost"
                   className={`h-9 px-3 text-sm font-medium ${
@@ -185,7 +135,7 @@ const Navigation = () => {
                       : "text-gray-800"
                   }`}
                 >
-                  Log in
+                  {session ? "Dashboard" : "Log in"}
                 </Button>
               </Link>
             </NavigationMenuItem>

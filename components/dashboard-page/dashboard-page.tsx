@@ -90,7 +90,7 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="min-h-screen p-6">
+    <div className="min-h-screen p-0 sm:p-6">
       <div className="max-w-8xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <div>
@@ -120,17 +120,6 @@ const Dashboard = () => {
                     <div className="p-3 bg-yellow-100 rounded-full">
                       <Users className="w-6 h-6 text-yellow-600" />
                     </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View details</DropdownMenuItem>
-                        <DropdownMenuItem>Export data</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
                   </div>
                   <div className="space-y-2">
                     <p className="text-3xl font-bold text-gray-900">
@@ -147,17 +136,6 @@ const Dashboard = () => {
                     <div className="p-3 bg-blue-100 rounded-full">
                       <Briefcase className="w-6 h-6 text-blue-600" />
                     </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View details</DropdownMenuItem>
-                        <DropdownMenuItem>Export data</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
                   </div>
                   <div className="space-y-2">
                     <p className="text-3xl font-bold text-gray-900">
@@ -174,17 +152,6 @@ const Dashboard = () => {
                     <div className="p-3 bg-green-100 rounded-full">
                       <UserPlus className="w-6 h-6 text-green-600" />
                     </div>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>View details</DropdownMenuItem>
-                        <DropdownMenuItem>Export data</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
                   </div>
                   <div className="space-y-2">
                     <p className="text-3xl font-bold text-gray-900">
@@ -204,7 +171,7 @@ const Dashboard = () => {
                   <CardTitle className="text-xl font-bold text-gray-900">
                     Employees
                   </CardTitle>
-                  <div className="flex items-center space-x-3">
+                  <div className="flex flex-wrap sm:flex-nowrap space-y-4 items-center space-x-3">
                     <div className="relative">
                       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                       <Input
@@ -272,11 +239,6 @@ const Dashboard = () => {
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
-                            <DropdownMenuItem
-                              onClick={() => console.log("View", row)}
-                            >
-                              View
-                            </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={() => handleRemoveFromTeam(row?.id)}
                             >
