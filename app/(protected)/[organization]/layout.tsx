@@ -8,6 +8,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
+import { Loader2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 
@@ -47,16 +48,14 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [activeOrganization, activeTeam, organization, router, setActiveTeam]);
 
-  if (isPending && !activeOrganization) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center">
-        <span className="text-sm text-muted-foreground">Loading…</span>
-      </div>
-    );
-  }
-
   return (
     <SidebarProvider>
+      {isPending && !activeOrganization && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-100/60">
+          <Loader2 className="w-8 h-8 animate-spin text-gray-500" />
+        </div>
+      )}
+
       <AppSidebar />
       <SidebarInset>
         <header className="bg-accent sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -67,7 +66,9 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           />
         </header>
         <div className="flex flex-1 flex-col gap-4 p-6 bg-gray-200">
-          {children}
+          <div className="flex flex-col gap-4 bg-gray-100 p-4 rounded-lg">
+            {children}
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>

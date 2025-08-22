@@ -1,100 +1,51 @@
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
 
-interface Footer7Props {
-  logo?: {
-    url: string;
-    src: string;
-    alt: string;
-    title: string;
-  };
-  sections?: Array<{
-    title: string;
-    links: Array<{ name: string; href: string }>;
-  }>;
-  description?: string;
-  socialLinks?: Array<{
-    icon: React.ReactElement;
-    href: string;
-    label: string;
-  }>;
-  copyright?: string;
-  legalLinks?: Array<{
-    name: string;
-    href: string;
-  }>;
-}
-
-const defaultSections = [
-  {
-    title: "Product",
-    links: [
-      { name: "Overview", href: "#" },
-      { name: "Pricing", href: "#" },
-      { name: "Marketplace", href: "#" },
-      { name: "Features", href: "#" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { name: "About", href: "#" },
-      { name: "Team", href: "#" },
-      { name: "Blog", href: "#" },
-      { name: "Careers", href: "#" },
-    ],
-  },
-  {
-    title: "Resources",
-    links: [
-      { name: "Help", href: "#" },
-      { name: "Sales", href: "#" },
-      { name: "Advertise", href: "#" },
-      { name: "Privacy", href: "#" },
-    ],
-  },
-];
-
-const FooterSection = ({
-  sections = defaultSections,
-  description = "InnovareHP is a healthcare marketing agency that helps hospitals grow with a proven 4-step process: Kickoff, Strategy, Action, and Growth. From digital marketing to boots-on-the-ground outreach, we craft tailored campaigns that attract patients and build lasting community trust.",
-}: Footer7Props) => {
+const SimpleFooter = () => {
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-left">
+    <footer className="bg-gray-50 border-t py-8">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col items-center text-center gap-4">
+        {/* Logo */}
+        <Link href="/">
           <Image
             src="/assets/logo.png"
             alt="InnovareHP"
-            width={60}
-            height={60}
+            width={50}
+            height={50}
+            className="mb-2"
           />
-          <div className="flex w-full flex-col justify-between gap-6 lg:items-start">
-            <p className="text-muted-foreground max-w-[70%] text-sm">
-              {description}
-            </p>
-          </div>
-          <div className="grid w-full gap-6 md:grid-cols-3 lg:gap-20">
-            {sections.map((section, sectionIdx) => (
-              <div key={sectionIdx}>
-                <h3 className="mb-4 font-bold">{section.title}</h3>
-                <ul className="text-muted-foreground space-y-3 text-sm">
-                  {section.links.map((link, linkIdx) => (
-                    <li
-                      key={linkIdx}
-                      className="hover:text-primary font-medium"
-                    >
-                      <a href={link.href}>{link.name}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
+        </Link>
+
+        {/* Description */}
+        <p className="text-sm text-gray-500 max-w-md">
+          InnovareHP helps hospitals grow with digital marketing and community
+          outreach. We craft campaigns that attract patients and build lasting
+          trust.
+        </p>
+
+        {/* Links */}
+        <nav className="flex gap-6 text-sm font-medium mt-4">
+          <Link href="/about" className="text-gray-600 hover:text-primary">
+            About
+          </Link>
+          <Link href="/services" className="text-gray-600 hover:text-primary">
+            Services
+          </Link>
+          <Link href="/blog" className="text-gray-600 hover:text-primary">
+            Blog
+          </Link>
+          <Link href="/contact" className="text-gray-600 hover:text-primary">
+            Contact
+          </Link>
+        </nav>
+
+        {/* Copyright */}
+        <p className="text-xs text-gray-400 mt-6">
+          © {new Date().getFullYear()} InnovareHP. All rights reserved.
+        </p>
       </div>
-    </section>
+    </footer>
   );
 };
 
-export default FooterSection;
+export default SimpleFooter;

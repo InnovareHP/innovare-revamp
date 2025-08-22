@@ -12,11 +12,9 @@ interface Cta4Props {
 }
 
 const defaultItems = [
-  "Easy Integration",
-  "24/7 Support",
-  "Customizable Design",
-  "Scalable Performance",
-  "Hundreds of Blocks",
+  "Tailored solutions",
+  "Fast response times",
+  "Scales with your business",
 ];
 
 const CtaStayInTouch = ({
@@ -42,7 +40,7 @@ const CtaStayInTouch = ({
                 </Link>
               </div>
               <div className="md:w-1/3">
-                <ul className="flex flex-col space-y-2 text-sm font-medium">
+                <ul className="flex flex-col justify-center space-y-2 text-sm font-medium">
                   {items.map((item, idx) => (
                     <li className="flex items-center" key={idx}>
                       <Check className="mr-4 size-4 flex-shrink-0" />

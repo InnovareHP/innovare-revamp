@@ -1,19 +1,6 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  CheckCircle,
-  Globe,
-  Loader2,
-  Mail,
-  MessageSquare,
-  Send,
-  User,
-} from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
+import { createGetInTouch } from "@/app/(public)/get-in-touch/action";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -29,6 +16,28 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  CheckCircle,
+  Globe,
+  Loader2,
+  Mail,
+  MessageSquare,
+  Send,
+  User,
+} from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
+import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export const StayInTouchSchema = z.object({
   name: z
@@ -38,10 +47,27 @@ export const StayInTouchSchema = z.object({
     .regex(/^[a-zA-Z\s]+$/, "Name can only contain letters and spaces"),
   phone: z
     .string()
-    .min(10, "Phone number must be at least 10 digits")
-    .regex(/^[\+]?[1-9][\d]{0,15}$/, "Please enter a valid phone number"),
+    .transform((v) => v.trim())
+    .transform((v) => v.replace(/[^\d+]/g, "")) // remove spaces, dashes, etc.
+    .refine((v) => {
+      // Keep only digits for validation logic
+      let d = v.replace(/\D/g, "");
+      // Allow leading '1' (country code) -> strip for local validation
+      if (d.length === 11 && d.startsWith("1")) d = d.slice(1);
+
+      // Must be exactly 10 digits after removing leading 1
+      if (d.length !== 10) return false;
+
+      // NANP: area code NXX and exchange NXX where N=2-9, X=0-9
+      return /^[2-9]\d{2}[2-9]\d{6}$/.test(d);
+    }, "Please enter a valid US phone number")
+    .transform((v) => {
+      // Normalize to +1XXXXXXXXXX
+      let d = v.replace(/\D/g, "");
+      if (d.length === 10) d = "1" + d;
+      return `+${d}`;
+    }),
   email: z
-    .string()
     .email("Please enter a valid email address")
     .min(1, "Email is required"),
   onlinePresence: z
@@ -59,7 +85,6 @@ export type StayInTouchForm = z.infer<typeof StayInTouchSchema>;
 
 const GetInTouch = () => {
   const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<StayInTouchForm>({
     resolver: zodResolver(StayInTouchSchema),
@@ -74,27 +99,13 @@ const GetInTouch = () => {
   });
 
   const onSubmit = async (data: StayInTouchForm) => {
-    setIsSubmitting(true);
-
     try {
-      console.log("Form data:", data);
+      await createGetInTouch(data);
 
-      const response = await fetch("/api/stay-in-touch", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to submit form");
-      }
-
+      form.reset();
       setSubmitted(true);
     } catch (error) {
-      console.error("Form submission error:", error);
-      // You could add error handling here
-    } finally {
-      setIsSubmitting(false);
+      toast.error("Failed to send message");
     }
   };
 
@@ -137,7 +148,6 @@ const GetInTouch = () => {
       <CardContent className="p-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Personal Information Section */}
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <User className="w-5 h-5 text-gray-600" />
@@ -147,7 +157,6 @@ const GetInTouch = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Name */}
                 <FormField
                   control={form.control}
                   name="name"
@@ -168,7 +177,6 @@ const GetInTouch = () => {
                   )}
                 />
 
-                {/* Phone */}
                 <FormField
                   control={form.control}
                   name="phone"
@@ -179,7 +187,7 @@ const GetInTouch = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="+1 (555) 123-4567"
+                          placeholder="Enter your phone number"
                           type="tel"
                           className="h-11"
                           {...field}
@@ -195,7 +203,6 @@ const GetInTouch = () => {
 
             <Separator />
 
-            {/* Contact Information Section */}
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <Globe className="w-5 h-5 text-gray-600" />
@@ -226,7 +233,6 @@ const GetInTouch = () => {
                   )}
                 />
 
-                {/* Online Presence */}
                 <FormField
                   control={form.control}
                   name="onlinePresence"
@@ -236,11 +242,21 @@ const GetInTouch = () => {
                         Online Presence <span className="text-red-500">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="LinkedIn profile, website, or social media"
-                          className="h-11"
-                          {...field}
-                        />
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger className="h-11">
+                            <SelectValue placeholder="Select an option" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="LinkedIn">LinkedIn</SelectItem>
+                            <SelectItem value="Website">Website</SelectItem>
+                            <SelectItem value="Social Media">
+                              Social Media
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
                       </FormControl>
 
                       <FormMessage />
@@ -263,87 +279,85 @@ const GetInTouch = () => {
                   </FormLabel>
                   <FormControl>
                     <RadioGroup
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      value={field.value} // controlled
+                      onValueChange={field.onChange} // bind change
                       className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3"
                     >
-                      <FormItem>
-                        <FormControl>
-                          <div className="relative">
-                            <RadioGroupItem
-                              value="email"
-                              id="email"
-                              className="peer sr-only"
-                            />
-                            <label
-                              htmlFor="email"
-                              className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-gray-300 transition-colors"
-                            >
-                              <Mail className="w-5 h-5 text-gray-600 peer-checked:text-blue-600" />
-                              <div>
-                                <div className="font-medium text-gray-900">
-                                  Email
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  Best for detailed responses
-                                </div>
-                              </div>
-                            </label>
+                      {/* Email */}
+                      <Label
+                        htmlFor="contact-email"
+                        className="
+              flex items-center space-x-3 p-4 rounded-lg cursor-pointer border-2 transition-colors
+              border-gray-200 hover:border-gray-300
+              has-[:where([data-state=checked])]:border-blue-500
+              has-[:where([data-state=checked])]:bg-blue-50
+            "
+                      >
+                        <RadioGroupItem
+                          id="contact-email"
+                          value="email"
+                          className="sr-only"
+                        />
+                        <Mail className="w-5 h-5 text-gray-600" />
+                        <div>
+                          <div className="font-medium text-gray-900">Email</div>
+                          <div className="text-sm text-gray-500">
+                            Best for detailed responses
                           </div>
-                        </FormControl>
-                      </FormItem>
+                        </div>
+                      </Label>
 
-                      <FormItem>
-                        <FormControl>
-                          <div className="relative">
-                            <RadioGroupItem
-                              value="text"
-                              id="text"
-                              className="peer sr-only"
-                            />
-                            <label
-                              htmlFor="text"
-                              className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-gray-300 transition-colors"
-                            >
-                              <MessageSquare className="w-5 h-5 text-gray-600 peer-checked:text-blue-600" />
-                              <div>
-                                <div className="font-medium text-gray-900">
-                                  Text Message
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  Quick and convenient
-                                </div>
-                              </div>
-                            </label>
+                      {/* Text */}
+                      <Label
+                        htmlFor="contact-text"
+                        className="
+              flex items-center space-x-3 p-4 rounded-lg cursor-pointer border-2 transition-colors
+              border-gray-200 hover:border-gray-300
+              has-[:where([data-state=checked])]:border-blue-500
+              has-[:where([data-state=checked])]:bg-blue-50
+            "
+                      >
+                        <RadioGroupItem
+                          id="contact-text"
+                          value="text"
+                          className="sr-only"
+                        />
+                        <MessageSquare className="w-5 h-5 text-gray-600" />
+                        <div>
+                          <div className="font-medium text-gray-900">
+                            Text Message
                           </div>
-                        </FormControl>
-                      </FormItem>
+                          <div className="text-sm text-gray-500">
+                            Quick and convenient
+                          </div>
+                        </div>
+                      </Label>
 
-                      <FormItem>
-                        <FormControl>
-                          <div className="relative">
-                            <RadioGroupItem
-                              value="text"
-                              id="text"
-                              className="peer sr-only"
-                            />
-                            <label
-                              htmlFor="text"
-                              className="flex items-center space-x-3 p-4 border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 hover:border-gray-300 transition-colors"
-                            >
-                              <MessageSquare className="w-5 h-5 text-gray-600 peer-checked:text-blue-600" />
-                              <div>
-                                <div className="font-medium text-gray-900">
-                                  Phone Call
-                                </div>
-                                <div className="text-sm text-gray-500">
-                                  Direct conversation
-                                </div>
-                              </div>
-                            </label>
+                      {/* Phone */}
+                      <Label
+                        htmlFor="contact-phone"
+                        className="
+              flex items-center space-x-3 p-4 rounded-lg cursor-pointer border-2 transition-colors
+              border-gray-200 hover:border-gray-300
+              has-[:where([data-state=checked])]:border-blue-500
+              has-[:where([data-state=checked])]:bg-blue-50
+            "
+                      >
+                        <RadioGroupItem
+                          id="contact-phone"
+                          value="phone"
+                          className="sr-only"
+                        />
+                        <MessageSquare className="w-5 h-5 text-gray-600" />
+                        <div>
+                          <div className="font-medium text-gray-900">
+                            Phone Call
                           </div>
-                        </FormControl>
-                      </FormItem>
+                          <div className="text-sm text-gray-500">
+                            Direct conversation
+                          </div>
+                        </div>
+                      </Label>
                     </RadioGroup>
                   </FormControl>
                   <FormMessage />
@@ -353,7 +367,6 @@ const GetInTouch = () => {
 
             <Separator />
 
-            {/* Message */}
             <FormField
               control={form.control}
               name="message"
@@ -381,10 +394,13 @@ const GetInTouch = () => {
               )}
             />
 
-            {/* Submit Button */}
             <div className="pt-6">
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? (
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting ? (
                   <>
                     <Loader2 className="w-5 h-5 mr-2 animate-spin" />
                     Sending Message...

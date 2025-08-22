@@ -53,6 +53,7 @@ import { Invitation } from "better-auth/plugins";
 import debounce from "lodash.debounce";
 import { toast } from "sonner";
 import { ReusableTable } from "../reusable-table/reusable-table";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 const TeamPage = () => {
   const { data: organizationData } = authClient.useActiveOrganization();
@@ -201,9 +202,9 @@ const TeamPage = () => {
   }, [employees, invitations]);
 
   return (
-    <div className="min-h-screen  p-6 rounded-xl">
-      <div className="max-w-8xl mx-auto px-6 space-y-8">
-        <div className="flex items-center justify-between">
+    <div className="min-h-screen p-0 sm:p-6 rounded-xl">
+      <div className="max-w-8xl mx-auto space-y-8">
+        <div className="flex flex-wrap space-y-4 items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">
               Team Management
@@ -217,7 +218,7 @@ const TeamPage = () => {
             onOpenChange={setIsInviteDialogOpen}
           >
             <DialogTrigger asChild>
-              <Button className="flex items-center space-x-2">
+              <Button className="flex items-center space-x-2 w-full sm:w-auto">
                 <UserPlus className="w-4 h-4" />
                 <span>Invite Member</span>
               </Button>
@@ -289,7 +290,7 @@ const TeamPage = () => {
 
         <Card className="shadow-lg border-0">
           <CardContent className="p-6">
-            <div className="flex items-center space-x-6">
+            <div className="flex flex-wrap sm:flex-nowrap justify-center items-center space-x-6">
               <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
                 <img
                   src={organizationData?.logo ?? ""}
@@ -451,11 +452,6 @@ const TeamPage = () => {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem
-                              onClick={() => console.log("View", row)}
-                            >
-                              View
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
                               onClick={() => handleRemoveFromTeam(row?.id)}
                             >
                               Remove From Team
@@ -491,77 +487,80 @@ const TeamPage = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {invitations?.length === 0 ? (
-                  <div className="text-center py-8">
-                    <Mail className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                      No pending invitations
-                    </h3>
-                    <p className="text-gray-600">
-                      All team members have been successfully onboarded.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {invitations?.map((invitation) => (
-                      <div
-                        key={invitation.id}
-                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
-                      >
-                        <div className="flex items-center space-x-4">
-                          <Avatar className="w-10 h-10">
-                            <AvatarFallback className="bg-gray-200">
-                              {invitation.email.charAt(0).toUpperCase()}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-medium text-gray-900">
-                              {invitation.email}
-                            </p>
-                            <div className="flex items-center space-x-2 text-sm text-gray-600">
-                              <span>{invitation.role}</span>
+                <ScrollArea>
+                  {invitations?.length === 0 ? (
+                    <div className="text-center py-8">
+                      <Mail className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        No pending invitations
+                      </h3>
+                      <p className="text-gray-600">
+                        All team members have been successfully onboarded.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {invitations?.map((invitation) => (
+                        <div
+                          key={invitation.id}
+                          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                        >
+                          <div className="flex items-center space-x-4">
+                            <Avatar className="w-10 h-10">
+                              <AvatarFallback className="bg-gray-200">
+                                {invitation.email.charAt(0).toUpperCase()}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="font-medium text-gray-900">
+                                {invitation.email}
+                              </p>
+                              <div className="flex items-center space-x-2 text-sm text-gray-600">
+                                <span>{invitation.role}</span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          {getStatusBadge(invitation.status)}
-                          <div className="text-sm text-gray-500">
-                            {formatDate(
-                              new Date(invitation.expiresAt).toISOString()
-                            )}
+                          <div className="flex items-center space-x-3">
+                            {getStatusBadge(invitation.status)}
+                            <div className="text-sm text-gray-500">
+                              {formatDate(
+                                new Date(invitation.expiresAt).toISOString()
+                              )}
+                            </div>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-8 w-8"
+                                >
+                                  <MoreVertical className="w-4 h-4" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    handleResendInvitation(invitation)
+                                  }
+                                >
+                                  Resend Invitation
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    handleCancelInvitation(invitation.id)
+                                  }
+                                >
+                                  Cancel Invitation
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
                           </div>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8"
-                              >
-                                <MoreVertical className="w-4 h-4" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuItem
-                                onClick={() =>
-                                  handleResendInvitation(invitation)
-                                }
-                              >
-                                Resend Invitation
-                              </DropdownMenuItem>
-                              <DropdownMenuItem
-                                onClick={() =>
-                                  handleCancelInvitation(invitation.id)
-                                }
-                              >
-                                Cancel Invitation
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                      ))}
+                    </div>
+                  )}
+                  <ScrollBar orientation="horizontal" />
+                </ScrollArea>
               </CardContent>
             </Card>
           </TabsContent>

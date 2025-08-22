@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { EMPLOYEE } from "@/lib/constant";
 import { Prisma } from "@/lib/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
@@ -21,9 +22,11 @@ export async function GET(request: NextRequest) {
     const parsedSearch = search;
 
     const whereClause: Prisma.company_log_tableWhereInput = {
-      member: {
-        id: member.id,
-      },
+      ...(member.role === EMPLOYEE && {
+        member: {
+          id: member.id,
+        },
+      }),
     };
 
     if (parsedDateType && parsedDateType !== "all") {
@@ -75,7 +78,10 @@ export async function GET(request: NextRequest) {
     );
 
     let completeDays = 0;
-    let totalHours = 0;
+    let totalHours = data.reduce(
+      (acc, log) => acc + (log.company_log_total_hours || 0),
+      0
+    );
 
     Object.values(logsByDay).forEach((logs) => {
       const timeIn = logs.find((l) => l.company_log_time_in);

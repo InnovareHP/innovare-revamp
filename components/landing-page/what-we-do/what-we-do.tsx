@@ -5,6 +5,7 @@ const WhatWeDo = () => {
   return (
     <motion.div
       className="bg-gray-50  py-12 px-6"
+      id="services"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}

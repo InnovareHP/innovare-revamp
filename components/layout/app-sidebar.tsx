@@ -1,5 +1,13 @@
 "use client";
-import { Calendar, Clock, LayoutDashboard, User, Users } from "lucide-react";
+import {
+  Book,
+  Calendar,
+  Clock,
+  LayoutDashboard,
+  Settings,
+  User,
+  Users,
+} from "lucide-react";
 import * as React from "react";
 
 import {
@@ -35,6 +43,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             title: "Attendance",
             icon: Calendar,
             url: `/${activeTeam?.slug}/attendance/manage`,
+          },
+          {
+            title: "Settings",
+            icon: Settings,
+            url: `/${activeTeam?.slug}/blog`,
+            items: [
+              {
+                title: "Blog",
+                icon: Book,
+                url: `/${activeTeam?.slug}/blog`,
+              },
+              {
+                title: "Get in Touch",
+                icon: Users,
+                url: `/${activeTeam?.slug}/get-in-touch`,
+              },
+            ],
           },
         ]
       : [
