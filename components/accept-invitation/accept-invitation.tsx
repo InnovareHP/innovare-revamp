@@ -75,7 +75,7 @@ const AcceptInvitation = ({ action }: { action: "accept" | "reject" }) => {
         onClick={() => router.replace("/login")}
         className="mt-4 px-4 py-2 rounded bg-gray-800 text-white hover:bg-gray-700"
       >
-        Go back to Login
+        {action === "accept" ? "Go to Dashboard" : "Go to Login"}
       </button>
     </div>
   );

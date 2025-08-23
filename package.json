@@ -57,7 +57,7 @@
     "resend": "^6.0.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1",
-    "zod": "^4.0.17",
+    "zod": "3.25.67",
     "zod-extended-validators": "^2.2.25"
   },
   "devDependencies": {

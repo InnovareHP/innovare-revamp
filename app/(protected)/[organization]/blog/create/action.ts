@@ -1,6 +1,7 @@
 "use server";
 import { BlogFormValues } from "@/components/blog-page/create-blog";
 import { auth } from "@/lib/auth";
+import { OWNER } from "@/lib/constant";
 import { BlogStatus } from "@/lib/generated/prisma";
 import { fixBlogStructure } from "@/lib/openai/openai";
 import { prisma } from "@/lib/prisma";
@@ -11,27 +12,25 @@ export async function createBlog(formData: BlogFormValues, slug?: string) {
     headers: await headers(),
   });
 
-  if (!activeMember) {
+  if (!activeMember || activeMember.role !== OWNER) {
     throw new Error("Unauthorized");
   }
 
-  const { structuredContent, metadata } = await fixBlogStructure(
-    formData.title,
-    formData.content
-  );
+  const { structuredContent, metadata, excerpt, category, tags } =
+    await fixBlogStructure(formData.title, formData.content);
 
   const blog = await prisma.company_blog_table.upsert({
     where: {
-      company_blog_slug: slug,
+      company_blog_slug: slug ?? "",
     },
     create: {
       company_blog_title: formData.title,
       company_blog_content: structuredContent,
       company_blog_member_id: activeMember.id,
-      company_blog_category: formData.category,
-      company_blog_tags: formData.tags
+      company_blog_category: category,
+      company_blog_tags: tags
         ? {
-            create: formData.tags.split(",").map((tag) => ({
+            create: tags.map((tag: string) => ({
               company_blog_tag_name: tag.trim(),
             })),
           }
@@ -40,7 +39,7 @@ export async function createBlog(formData: BlogFormValues, slug?: string) {
         formData.status === "draft" ? BlogStatus.DRAFT : BlogStatus.PUBLISHED,
       company_blog_featured_image: formData.featuredImage,
       company_blog_slug: formData.title.toLowerCase().replace(/ /g, "-"),
-      company_blog_excerpt: formData.excerpt,
+      company_blog_excerpt: excerpt,
       company_blog_meta_title: metadata.metaTitle,
       company_blog_meta_description: metadata.metaDescription,
       company_blog_meta_keywords: metadata.metaKeywords,
@@ -49,10 +48,10 @@ export async function createBlog(formData: BlogFormValues, slug?: string) {
       company_blog_title: formData.title,
       company_blog_content: structuredContent,
       company_blog_member_id: activeMember.id,
-      company_blog_category: formData.category,
-      company_blog_tags: formData.tags
+      company_blog_category: category,
+      company_blog_tags: tags
         ? {
-            create: formData.tags.split(",").map((tag) => ({
+            create: tags.map((tag: string) => ({
               company_blog_tag_name: tag.trim(),
             })),
           }
@@ -61,7 +60,7 @@ export async function createBlog(formData: BlogFormValues, slug?: string) {
         formData.status === "draft" ? BlogStatus.DRAFT : BlogStatus.PUBLISHED,
       company_blog_featured_image: formData.featuredImage,
       company_blog_slug: formData.title.toLowerCase().replace(/ /g, "-"),
-      company_blog_excerpt: formData.excerpt,
+      company_blog_excerpt: excerpt,
       company_blog_meta_title: metadata.metaTitle,
       company_blog_meta_description: metadata.metaDescription,
       company_blog_meta_keywords: metadata.metaKeywords,
@@ -76,7 +75,7 @@ export async function deleteBlog(slug: string) {
     headers: await headers(),
   });
 
-  if (!activeMember) {
+  if (!activeMember || activeMember.role !== OWNER) {
     throw new Error("Unauthorized");
   }
 

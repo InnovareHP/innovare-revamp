@@ -67,9 +67,7 @@ export const StayInTouchSchema = z.object({
       if (d.length === 10) d = "1" + d;
       return `+${d}`;
     }),
-  email: z
-    .email("Please enter a valid email address")
-    .min(1, "Email is required"),
+  email: z.string().email("Please enter a valid email address"),
   onlinePresence: z
     .string()
     .min(3, "Please provide a valid link or username")

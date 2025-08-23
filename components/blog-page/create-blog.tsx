@@ -15,13 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { BlogStatus } from "@/lib/generated/prisma";
 import { BlogPostWithRelations } from "@/lib/queries/blog";
@@ -31,20 +24,16 @@ import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { toast } from "sonner";
 import { useUser } from "../provider/app-provider";
+import PageLoader from "../ui/page-loader";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  category: z.string().min(1, "Category is required"),
-  excerpt: z.string().optional(),
   content: z.string().min(1, "Content is required"),
-  tags: z.string().optional(),
   status: z.enum(["draft", "published"]),
   featuredImage: z.any().optional(),
 });
 
 export type BlogFormValues = z.infer<typeof formSchema>;
-
-const categories = ["Health", "Innovation", "Technology", "Lifestyle"];
 
 const CreateBlogPage = ({ post }: { post: BlogPostWithRelations | null }) => {
   const router = useRouter();
@@ -54,13 +43,7 @@ const CreateBlogPage = ({ post }: { post: BlogPostWithRelations | null }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: post?.company_blog_title ?? "",
-      category: post?.company_blog_category ?? "",
-      excerpt: post?.company_blog_excerpt ?? "",
       content: post?.company_blog_content ?? "",
-      tags:
-        post?.company_blog_tags
-          ?.map((tag) => tag.company_blog_tag_name)
-          .join(",") ?? "",
       status:
         post?.company_blog_status === BlogStatus.PUBLISHED
           ? "published"
@@ -95,9 +78,11 @@ const CreateBlogPage = ({ post }: { post: BlogPostWithRelations | null }) => {
         Fill in the details below to create a new blog post.
       </p>
 
+      {form.formState.isSubmitting && <PageLoader />}
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <FormField
               control={form.control}
               name="title"
@@ -111,7 +96,7 @@ const CreateBlogPage = ({ post }: { post: BlogPostWithRelations | null }) => {
                 </FormItem>
               )}
             />
-
+            {/* 
             <FormField
               control={form.control}
               name="category"
@@ -135,10 +120,10 @@ const CreateBlogPage = ({ post }: { post: BlogPostWithRelations | null }) => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
           </div>
 
-          <FormField
+          {/* <FormField
             control={form.control}
             name="excerpt"
             render={({ field }) => (
@@ -154,7 +139,7 @@ const CreateBlogPage = ({ post }: { post: BlogPostWithRelations | null }) => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           <FormField
             control={form.control}
@@ -178,7 +163,7 @@ const CreateBlogPage = ({ post }: { post: BlogPostWithRelations | null }) => {
               </FormItem>
             )}
           />
-
+          {/* 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={form.control}
@@ -219,7 +204,7 @@ const CreateBlogPage = ({ post }: { post: BlogPostWithRelations | null }) => {
                 </FormItem>
               )}
             />
-          </div>
+          </div> */}
 
           <FormField
             control={form.control}

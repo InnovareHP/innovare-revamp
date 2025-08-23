@@ -19,6 +19,19 @@ export const createAttendance = async (formData: AttendanceFormValues) => {
 
   const action = {
     "time-in": async () => {
+      // const log = await prisma.company_log_table.findFirstOrThrow({
+      //   where: {
+      //     company_log_member_id: memberId,
+      //     company_log_created_at: {
+      //       gte: new Date(new Date().setHours(0, 0, 0, 0)),
+      //     },
+      //   },
+      // });
+
+      // if (log) {
+      //   throw new Error("You have already logged in today");
+      // }
+
       await Promise.all([
         prisma.company_log_table.create({
           data: {

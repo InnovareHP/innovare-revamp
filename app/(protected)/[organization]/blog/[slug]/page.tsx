@@ -3,13 +3,24 @@ import BlogContent from "@/components/blog-page/blog-content";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import GoBack from "@/components/ui/go-back";
+import { auth } from "@/lib/auth";
+import { OWNER } from "@/lib/constant";
 import { formatDate } from "@/lib/helper";
 import { getBlogPost } from "@/lib/queries/blog";
 import { Calendar, Tag } from "lucide-react";
+import { headers } from "next/headers";
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const activeMember = await auth.api.getActiveMember({
+    headers: await headers(),
+  });
+
+  if (!activeMember || activeMember.role !== OWNER) {
+    return redirect("/callback");
+  }
+
   const { slug } = await params;
   const post = await getBlogPost(slug);
 
