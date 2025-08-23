@@ -11,9 +11,9 @@ export const fixBlogStructure = async (title: string, content: string) => {
     input: `You are a professional blog editor and SEO expert. 
         Rewrite the following blog content with:
         - Proper Markdown structure (## Headings, ### Subheadings, etc.)
-        - Short paragraphs
-        - Bulleted or numbered lists if needed
-        - Keep the tone engaging and clear
+        - Exact content of the blog post
+        - Keep the content relevant to the title
+        - Keep the content concise and to the point
   
         Additionally, generate SEO metadata for the page:
         - metaTitle (max 60 characters, engaging)
@@ -28,6 +28,9 @@ export const fixBlogStructure = async (title: string, content: string) => {
             "metaDescription": "...",
             "metaKeywords": "..."
           }
+          "excerpt": "..."
+          "tags": ["..."]
+          "category": "..."
         }
   
         Title: "${title}"

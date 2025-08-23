@@ -48,30 +48,53 @@ import { Textarea } from "@/components/ui/textarea";
 import { authClient } from "@/lib/auth-client";
 import { formatDate } from "@/lib/helper";
 import { MemberService } from "@/services/member/member-sective";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Invitation } from "better-auth/plugins";
 import debounce from "lodash.debounce";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
 import { ReusableTable } from "../reusable-table/reusable-table";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+
+const formSchema = z.object({
+  email: z.string().email(),
+  role: z.enum(["employee", "owner"]),
+  message: z.string(),
+});
 
 const TeamPage = () => {
   const { data: organizationData } = authClient.useActiveOrganization();
   const queryClient = useQueryClient();
 
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
-  const [inviteForm, setInviteForm] = useState({
-    email: "",
-    role: "employee",
-    department: "",
-    message: "",
-  });
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      role: "employee",
+      message: "",
+    },
+    mode: "onChange",
+  });
   const [memberTableField, setMemberTableField] = useState({
     page: 1,
     limit: 10,
     search: "",
   });
+
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((val: string) => {
+        setMemberTableField((prev) => ({
+          ...prev,
+          search: val,
+        }));
+      }, 500),
+    []
+  );
 
   const { data: invitations } = useQuery({
     queryKey: ["invitations"],
@@ -123,16 +146,18 @@ const TeamPage = () => {
     }
   };
 
-  const handleInvite = async () => {
+  const handleInvite = async (data: z.infer<typeof formSchema>) => {
     try {
+      console.log(data);
       await authClient.organization.inviteMember({
-        email: inviteForm.email,
-        role: inviteForm.role as "member" | "admin" | "owner",
+        email: data.email,
+        role: data.role as "member" | "admin" | "owner",
         organizationId: organizationData?.id ?? "",
         resend: true,
       });
       setIsInviteDialogOpen(false);
-      setInviteForm({ email: "", role: "member", department: "", message: "" });
+
+      form.reset();
 
       queryClient.invalidateQueries({ queryKey: ["invitations"] });
       toast.success("Invitation sent successfully");
@@ -141,16 +166,7 @@ const TeamPage = () => {
     }
   };
 
-  const debouncedSearch = useMemo(
-    () =>
-      debounce((val: string) => {
-        setMemberTableField((prev) => ({
-          ...prev,
-          search: val,
-        }));
-      }, 500),
-    []
-  );
+  console.log(form.formState.errors);
 
   const handleResendInvitation = async (data: Invitation) => {
     try {
@@ -230,60 +246,62 @@ const TeamPage = () => {
                   Send an invitation to join {organizationData?.name}
                 </DialogDescription>
               </DialogHeader>
-              <div className="space-y-4">
-                <Label htmlFor="email">Email Address</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="colleague@email.com"
-                  value={inviteForm.email}
-                  onChange={(e) =>
-                    setInviteForm({ ...inviteForm, email: e.target.value })
-                  }
-                />
+              <form onSubmit={form.handleSubmit(handleInvite)}>
+                <div className="space-y-4">
+                  <Label htmlFor="email">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="colleague@email.com"
+                    {...form.register("email")}
+                  />
 
-                <Label htmlFor="role">Role</Label>
-                <Select
-                  value={inviteForm.role}
-                  onValueChange={(value) =>
-                    setInviteForm({ ...inviteForm, role: value })
-                  }
-                >
-                  <SelectTrigger defaultValue="employee" className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="employee">Employee</SelectItem>
-                    <SelectItem value="owner">Owner</SelectItem>
-                  </SelectContent>
-                </Select>
+                  <Label htmlFor="role">Role</Label>
+                  <Select
+                    {...form.register("role")}
+                    onValueChange={(value) =>
+                      form.setValue("role", value as "employee" | "owner")
+                    }
+                    defaultValue="employee"
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="employee">Employee</SelectItem>
+                      <SelectItem value="owner">Owner</SelectItem>
+                    </SelectContent>
+                  </Select>
 
-                <Label htmlFor="message">Personal Message (Optional)</Label>
-                <Textarea
-                  id="message"
-                  placeholder="Welcome to our team!"
-                  value={inviteForm.message}
-                  onChange={(e) =>
-                    setInviteForm({ ...inviteForm, message: e.target.value })
-                  }
-                  rows={3}
-                />
-              </div>
-              <DialogFooter>
-                <Button
-                  variant="outline"
-                  onClick={() => setIsInviteDialogOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleInvite}
-                  className="flex items-center space-x-2"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>Send Invitation</span>
-                </Button>
-              </DialogFooter>
+                  <Label htmlFor="message">Personal Message (Optional)</Label>
+                  <Textarea
+                    id="message"
+                    placeholder="Welcome to our team!"
+                    rows={3}
+                    {...form.register("message")}
+                  />
+                </div>
+                <DialogFooter className="pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsInviteDialogOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    disabled={form.formState.isSubmitting}
+                    type="submit"
+                    className="flex items-center space-x-2"
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>
+                      {form.formState.isSubmitting
+                        ? "Sending..."
+                        : "Send Invitation"}
+                    </span>
+                  </Button>
+                </DialogFooter>
+              </form>
             </DialogContent>
           </Dialog>
         </div>

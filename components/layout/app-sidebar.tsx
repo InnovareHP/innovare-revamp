@@ -90,7 +90,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   };
 
   return (
-    <Sidebar className="border-r bg-gray-50" {...props}>
+    <Sidebar className="border-r bg-gray-50 z-50" {...props}>
       <SidebarHeader className="border-b border-gray-200 h-16 px-4">
         <div className="flex items-center gap-3">
           <Image

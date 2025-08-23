@@ -21,7 +21,7 @@ import {
 } from "../ui/form";
 
 const formSchema = z.object({
-  email: z.email({ message: "Invalid email address" }),
+  email: z.string().email({ message: "Invalid email address" }),
   password: z.string().min(8),
 });
 

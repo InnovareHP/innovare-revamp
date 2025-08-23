@@ -1,6 +1,7 @@
 "use client";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { useUser } from "@/components/provider/app-provider";
+import PageLoader from "@/components/ui/page-loader";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
@@ -8,7 +9,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
-import { Loader2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
 
@@ -50,15 +50,11 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <SidebarProvider>
-      {isPending && !activeOrganization && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-100/60">
-          <Loader2 className="w-8 h-8 animate-spin text-gray-500" />
-        </div>
-      )}
+      {isPending && !activeOrganization && <PageLoader />}
 
       <AppSidebar />
       <SidebarInset>
-        <header className="bg-accent sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
+        <header className="bg-accent sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4 z-50">
           <SidebarTrigger className="-ml-1" />
           <Separator
             orientation="vertical"

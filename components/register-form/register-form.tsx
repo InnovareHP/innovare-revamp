@@ -21,7 +21,7 @@ import {
 } from "../ui/form";
 
 const formSchema = z.object({
-  email: z.email({ message: "Invalid email address" }),
+  email: z.string().email({ message: "Invalid email address" }),
   password: z.string().min(8),
   name: z.string().min(1),
   confirmPassword: z.string().min(8),
@@ -54,7 +54,9 @@ export function RegisterForm({
         return toast.error(response.error.message);
       }
 
-      toast.success("Account created successfully");
+      toast.success(
+        "Account created successfully, please check your email for verification"
+      );
     } catch (error) {
       toast.error("Failed to create account");
     }

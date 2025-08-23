@@ -3,7 +3,6 @@
 import {
   Bell,
   Briefcase,
-  Filter,
   MessageSquare,
   MoreHorizontal,
   Search,
@@ -181,13 +180,6 @@ const Dashboard = () => {
                         className="pl-10 w-64"
                       />
                     </div>
-                    <Button
-                      variant="outline"
-                      className="flex items-center space-x-2"
-                    >
-                      <Filter className="w-4 h-4" />
-                      <span>Add filter</span>
-                    </Button>
                   </div>
                 </div>
               </CardHeader>

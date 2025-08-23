@@ -33,13 +33,15 @@ import {
   Users,
 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 export const formSchema = z.object({
   accountType: z.enum(["client", "employee"], {
-    error: "Please select your account type",
+    required_error: "Please select your account type",
   }),
   position: z.string().min(1, "Please select a position"),
   bio: z.string().optional(),
@@ -70,6 +72,7 @@ const stepConfig = [
 
 export default function OnboardingPage() {
   const { member } = useUser();
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [preview, setPreview] = useState<string | null>(null);
 
@@ -109,6 +112,9 @@ export default function OnboardingPage() {
         ...values,
         profilePicture: image.url,
       });
+
+      router.push("/callback");
+      toast.success("Onboarding completed successfully");
     } catch (error) {
       await imageService.deleteImage(image.url);
     }

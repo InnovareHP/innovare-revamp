@@ -65,7 +65,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-4xl mx-auto py-12">
+      <div className="max-w-4xl mx-auto py-26">
         <div className="px-6">
           {post.company_blog_featured_image && (
             <div className="mb-8 relative">
