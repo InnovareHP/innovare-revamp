@@ -153,7 +153,7 @@ const HeroSection = () => {
                   >
                     <Image
                       className="aspect-video w-full object-cover rounded-2xl"
-                      src="/assets/innovarehp.png"
+                      src="/assets/bg-innovare.png"
                       alt="Healthcare Marketing Dashboard"
                       width={1200}
                       height={675}
