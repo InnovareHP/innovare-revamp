@@ -15,14 +15,6 @@ const stagger = {
   animate: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
 };
 
-const floatSlow = (y = 12, dur = 8) => ({
-  initial: { y: 0, opacity: 1 },
-  animate: {
-    y: [0, -y, 0, y, 0],
-    transition: { duration: dur, ease: "easeInOut", repeat: Infinity },
-  },
-});
-
 const cardPop = {
   initial: { opacity: 0, scale: 0.98 },
   whileInView: {
@@ -219,7 +211,7 @@ const HeroSection = () => {
                         key={`${strip}-${n}`}
                       >
                         <Image
-                          src={`/assets/testimonials/innovare HP Brochure (${n}).png`}
+                          src={`/assets/testimonials/innovare-HP-Brochure-(${n}).png`}
                           alt="Innovare HP"
                           width={350}
                           height={350}
