@@ -114,7 +114,7 @@ const HeroSection = () => {
                   <Button
                     asChild
                     size="lg"
-                    variant="ghost"
+                    variant="outline"
                     className="h-12 rounded-xl px-6 text-base font-medium hover:bg-muted/80 transition-colors"
                   >
                     <Link href="/get-in-touch">
@@ -128,13 +128,13 @@ const HeroSection = () => {
           </div>
 
           <div>
-            <div className="relative -mr-56 mt-16 overflow-hidden px-2 sm:mr-0 sm:mt-20 md:mt-24">
+            <div className="relative -mr-56 mt-16 overflow-hidden hidden  sm:block sm:mr-0 sm:mt-20 md:mt-24">
               <div
                 aria-hidden
                 className="bg-gradient-to-b to-background from-transparent from-35% absolute inset-0 z-10"
               />
               <motion.div
-                className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl border border-border/50 bg-background/80 backdrop-blur-sm p-2 shadow-2xl ring-1 ring-border/20"
+                className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl border border-border/50 bg-background/80 backdrop-blur-sm p-2 shadow-2xl ring-1 ring-border/20"
                 {...(cardPop as Variants)}
               >
                 <motion.div
