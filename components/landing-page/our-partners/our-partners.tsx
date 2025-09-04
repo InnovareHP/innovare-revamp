@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/carousel";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 // === Types & Data ===
 interface Testimonial {
@@ -68,16 +67,6 @@ const TestimonialCard = ({ t }: { t: Testimonial }) => {
       className="rounded-xl border border-gray-200 bg-white/70 p-6 shadow-sm hover:shadow-md h-full"
     >
       <div className="flex items-start gap-5">
-        <div className="flex w-[120px] shrink-0 items-center justify-between gap-4">
-          <Image
-            src={t.headshot}
-            alt={`${t.name} headshot`}
-            width={72}
-            height={72}
-            className="h-18 w-18 rounded-full object-cover ring-1 ring-gray-200"
-          />
-        </div>
-
         <div className="flex-1">
           <p className="text-[15px] leading-relaxed text-gray-800 italic">
             “{t.quote}”

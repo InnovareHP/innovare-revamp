@@ -53,17 +53,6 @@ const MeetOurTeam = () => {
     },
     {
       id: 5,
-      name: "Adrian Pol Peligrino",
-      role: "IT Manager",
-      image: "/assets/team/team-photo-3-it-manager.jpeg",
-      backgroundColor: "bg-green-300",
-      bio: "Oversees IT systems ensuring smooth and secure operations.",
-      socials: {
-        linkedin: "#",
-      },
-    },
-    {
-      id: 6,
       name: "Shiela Mae Veran",
       role: "Strategic Growth Associate",
       image: "/assets/team/team-photo-4-hr.jpeg",

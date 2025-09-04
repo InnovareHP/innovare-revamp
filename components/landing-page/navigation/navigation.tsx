@@ -48,7 +48,7 @@ const Navigation = () => {
         pathname === "/"
           ? isScrolled
             ? "bg-white shadow-sm"
-            : "bg-transparent"
+            : "bg-white sm:bg-primary"
           : "bg-white shadow-sm"
       }`}
     >
@@ -144,7 +144,7 @@ const Navigation = () => {
 
         <Sheet>
           <SheetTrigger className="block md:hidden text-white">
-            <MenuIcon className="w-6 h-6" />
+            <MenuIcon className="w-6 h-6 text-black" />
           </SheetTrigger>
           <SheetContent>
             <SheetHeader>

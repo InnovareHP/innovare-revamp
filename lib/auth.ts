@@ -1,9 +1,10 @@
 import { render } from "@react-email/render";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { haveIBeenPwned, organization } from "better-auth/plugins";
+import { haveIBeenPwned, organization, twoFactor } from "better-auth/plugins";
 import InvitationEmail from "./email/invitation";
 import { MagicLink } from "./email/magic-link";
+import { OTPEmail } from "./email/otp-email";
 import { prisma } from "./prisma";
 import { resend } from "./resend";
 
@@ -123,6 +124,36 @@ export const auth = betterAuth({
     requireEmailVerification: true,
   },
   plugins: [
+    twoFactor({
+      schema: {
+        twoFactor: {
+          modelName: "two_factor_table",
+          fields: {
+            userId: "two_factor_user_id",
+            secret: "two_factor_secret",
+            backupCodes: "two_factor_backup_codes",
+            twoFactorEnabled: "two_factor_enabled",
+          },
+        },
+        user: {
+          modelName: "user_table",
+          fields: {
+            twoFactorEnabled: "user_two_factor_enabled",
+          },
+        },
+      },
+      otpOptions: {
+        async sendOTP({ user, otp }) {
+          await resend.emails.send({
+            from: "InnovareHP <no-reply@portfolio-glorioso.site>",
+            to: user.email,
+            subject: "OTP for InnovareHP",
+            html: await render(OTPEmail({ otp })),
+          });
+        },
+      },
+      skipVerificationOnEnable: true,
+    }),
     organization({
       sendInvitationEmail: async (data) => {
         await resend.emails.send({

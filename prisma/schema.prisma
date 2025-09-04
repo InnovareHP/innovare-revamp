@@ -32,10 +32,12 @@ model User_table {
   user_image          String?          
   user_created_at     DateTime             
   user_updated_at     DateTime          
+  user_two_factor_enabled Boolean?           @default(false)
   session_tables      Session_table[]
   user_account_tables User_account_table[]
   member_tables       Member_table[]
   invitation_tables   Invitation_table[]
+  two_factor_tables   two_factor_table[]
 
   @@unique([user_email])
   @@map("user_table")
@@ -93,6 +95,19 @@ model Verification_table {
   @@schema("auth_schema")
 }
 
+model two_factor_table {
+  id                      String     @id @default(uuid())
+  two_factor_secret       String
+  two_factor_backup_codes String 
+  two_factor_user_id      String 
+  user_table              User_table @relation(fields: [two_factor_user_id], references: [id], onDelete: Cascade)
+
+  @@map("two_factor_table")
+  
+  @@schema("auth_schema")
+}
+
+
 model Organization_table {
   id                      String             @id @default(uuid())
   organization_name       String          
@@ -148,7 +163,13 @@ model company_log_table {
   id                  String                  @id @default(uuid())
   company_log_created_at DateTime              @default(now())
   company_log_time_in DateTime                 @default(now())
-  company_log_time_out DateTime?             
+  company_log_time_out DateTime?
+  company_log_break_time_1 DateTime?
+  company_log_break_time_1_end DateTime?
+  company_log_break_time_lunch DateTime?
+  company_log_break_time_lunch_end DateTime?
+  company_log_break_time_2 DateTime?
+  company_log_break_time_2_end DateTime?
   company_log_total_hours Int?
   company_log_member_id String
 

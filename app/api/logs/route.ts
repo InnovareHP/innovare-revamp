@@ -98,9 +98,8 @@ export async function GET(request: NextRequest) {
     });
 
     const avgHours = completeDays > 0 ? totalHours / completeDays : 0;
-
     return NextResponse.json({
-      data,
+      data: data,
       count: total,
       analytics: {
         completeDays: completeDays.toFixed(2),

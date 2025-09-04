@@ -48,6 +48,14 @@ export function RegisterForm({
         password: data.password,
         name: data.name,
         callbackURL: "/callback",
+        fetchOptions: {
+          onSuccess: async () => {
+            await authClient.twoFactor.enable({
+              password: data.password,
+              issuer: "InnovareHP",
+            });
+          },
+        },
       });
 
       if (response.error) {

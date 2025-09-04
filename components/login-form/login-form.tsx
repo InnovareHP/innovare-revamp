@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
@@ -31,6 +32,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,13 +49,24 @@ export function LoginForm({
         callbackURL: "/callback",
       });
 
+      if ("twoFactorRedirect" in response) {
+        await authClient.twoFactor.sendOtp({
+          query: {
+            email: data.email,
+          },
+        });
+
+        return router.push("/otp-verification");
+      }
+
       if (response.error) {
         return toast.error(response.error.message);
       }
 
       toast.success("Login successful");
+      router.push("/callback");
     } catch (error) {
-      console.error(error);
+      toast.error("Failed to login");
     }
   };
 
