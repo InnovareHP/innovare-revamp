@@ -40,7 +40,6 @@ const HeroSection = () => {
       initial="initial"
       animate="animate"
     >
-      {/* floating gradient blobs */}
       <div
         aria-hidden
         className="absolute inset-0 isolate hidden contain-strict lg:block"

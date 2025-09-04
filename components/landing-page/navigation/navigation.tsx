@@ -124,6 +124,22 @@ const Navigation = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
+              <Link href="/brochure">
+                <Button
+                  variant="ghost"
+                  className={`h-9 px-3 text-sm font-medium ${
+                    pathname === "/"
+                      ? isScrolled
+                        ? "text-gray-800"
+                        : "text-white"
+                      : "text-gray-800"
+                  }`}
+                >
+                  Brochure
+                </Button>
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
               <Link href={`${session ? "/callback" : "/login"}`}>
                 <Button
                   variant="ghost"
