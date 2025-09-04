@@ -69,7 +69,13 @@ export default async function RootLayout({
   try {
     //@ts-expect-error - TODO: fix this
     [user, member] = await Promise.all([
-      auth.api.getSession({ headers: rawHeaders }),
+      auth.api.getSession({
+        headers: rawHeaders,
+        query: {
+          disableRefresh: true,
+          disableCookieCache: true,
+        },
+      }),
       auth.api.getActiveMember({ headers: rawHeaders }),
     ]);
   } catch (error) {

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/select";
 import { company_log_task_table } from "@/lib/generated/prisma";
 import { formatDate, formatTime } from "@/lib/helper";
+import { renderBreakCell } from "@/lib/utils";
 import { LogsService } from "@/services/logs/logs-service";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -231,7 +232,36 @@ const TimeLogsPage = () => {
                         )
                       : "Not recorded",
                 },
-                // { key: "totalHours", header: "Total Hours" },
+                {
+                  key: "company_log_break_time_1",
+                  header: "Break 1",
+                  render: (row) =>
+                    renderBreakCell(
+                      row,
+                      "company_log_break_time_1",
+                      "company_log_break_time_1_end"
+                    ),
+                },
+                {
+                  key: "company_log_break_time_lunch",
+                  header: "Lunch",
+                  render: (row) =>
+                    renderBreakCell(
+                      row,
+                      "company_log_break_time_lunch",
+                      "company_log_break_time_lunch_end"
+                    ),
+                },
+                {
+                  key: "company_log_break_time_2",
+                  header: "Break 2",
+                  render: (row) =>
+                    renderBreakCell(
+                      row,
+                      "company_log_break_time_2",
+                      "company_log_break_time_2_end"
+                    ),
+                },
                 {
                   key: "tasks",
                   header: "Tasks",
