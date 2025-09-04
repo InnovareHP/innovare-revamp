@@ -155,8 +155,8 @@ const HeroSection = () => {
                       className="aspect-video w-full object-cover rounded-2xl"
                       src="/assets/innovarehp.png"
                       alt="Healthcare Marketing Dashboard"
-                      width="1200"
-                      height="675"
+                      width={1200}
+                      height={675}
                       priority
                     />
                   </motion.div>
@@ -211,7 +211,7 @@ const HeroSection = () => {
                         key={`${strip}-${n}`}
                       >
                         <Image
-                          src={`/assets/testimonials/innovare-HP-Brochure-(${n}).png`}
+                          src={`/assets/testimonials/Innovare-HP-Brochure-(${n}).png`}
                           alt="Innovare HP"
                           width={350}
                           height={350}
