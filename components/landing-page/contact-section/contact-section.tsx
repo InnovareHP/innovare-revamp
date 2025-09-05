@@ -54,7 +54,7 @@ const FeatureHero = () => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="mt-8 flex gap-4"
           >
-            <Link href="/request-consultation">
+            <Link href="/get-in-touch">
               <Button className="group">
                 Request a Consultation
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

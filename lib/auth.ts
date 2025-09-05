@@ -145,7 +145,7 @@ export const auth = betterAuth({
       otpOptions: {
         async sendOTP({ user, otp }) {
           await resend.emails.send({
-            from: "InnovareHP <no-reply@portfolio-glorioso.site>",
+            from: process.env.EMAIL_FROM!,
             to: user.email,
             subject: "OTP for InnovareHP",
             html: await render(OTPEmail({ otp })),
@@ -157,7 +157,7 @@ export const auth = betterAuth({
     organization({
       sendInvitationEmail: async (data) => {
         await resend.emails.send({
-          from: "InnovareHP <no-reply@portfolio-glorioso.site>",
+          from: process.env.EMAIL_FROM!,
           to: data.email,
           subject: `Invitation to join ${data.organization.name}`,
           html: await render(

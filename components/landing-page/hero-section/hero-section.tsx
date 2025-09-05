@@ -103,7 +103,7 @@ const HeroSection = () => {
                       size="lg"
                       className="rounded-xl px-8 py-3 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                     >
-                      <Link href="/request-consultation">
+                      <Link href="/get-in-touch">
                         <span className="text-nowrap">
                           Request a Consultation
                         </span>

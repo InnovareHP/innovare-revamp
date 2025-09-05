@@ -15,6 +15,8 @@ const defaultItems = [
   "Tailored solutions",
   "Fast response times",
   "Scales with your business",
+  "Free consultation",
+  "100% satisfaction guarantee",
 ];
 
 const CtaStayInTouch = ({

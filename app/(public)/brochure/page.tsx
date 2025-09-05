@@ -27,7 +27,7 @@ function handleViewFile(url: string) {
 
 const BrochurePage = () => {
   return (
-    <div className="min-h-screen bg-background pt-10">
+    <div className="min-h-screen bg-background py-10">
       <div className="bg-gradient-to-br from-primary/5 via-background to-muted/20">
         <div className="container mx-auto px-6 py-16">
           <div className="max-w-4xl mx-auto text-center space-y-6">
