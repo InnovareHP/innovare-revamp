@@ -107,7 +107,7 @@ export const auth = betterAuth({
     sendVerificationEmail: async ({ url, user, token }) => {
       const tokenUrl = `${url}?token=${token}`;
       await resend.emails.send({
-        from: "InnovareHP <no-reply@portfolio-glorioso.site>",
+        from: process.env.EMAIL_FROM!,
         to: user.email,
         subject: "Verify your InnovareHP account",
         html: await render(MagicLink({ magicLink: tokenUrl })),

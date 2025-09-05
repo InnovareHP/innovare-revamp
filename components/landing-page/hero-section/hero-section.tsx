@@ -63,7 +63,7 @@ const HeroSection = () => {
       <section>
         <div className="relative pt-24">
           <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
-          <div className="mx-auto max-w-6xl px-6">
+          <div className="mx-auto max-w-7xl">
             <motion.div
               className="sm:mx-auto lg:mr-auto lg:mt-0"
               variants={stagger}
@@ -72,20 +72,21 @@ const HeroSection = () => {
               viewport={{ once: true, amount: 0.35 }}
             >
               <motion.h1
-                className="mt-8 max-w-4xl text-balance text-5xl font-bold md:text-7xl lg:mt-16 bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent"
+                className="mt-8 max-w-3xl text-balance text-5xl font-bold md:text-7xl lg:mt-16 bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent"
                 variants={fadeUp as Variants}
               >
-                Transform Healthcare Marketing with
-                <span className="text-primary"> Innovation</span>
+                Marketing that empowers
+                <span className="text-primary"> healthcare brands</span> to
+                stand apart and stay ahead.
               </motion.h1>
 
               <motion.p
                 className="mt-8 max-w-2xl text-pretty text-xl text-muted-foreground leading-relaxed"
                 variants={fadeUp as Variants}
               >
-                Cutting-edge digital marketing solutions designed specifically
-                for healthcare providers. Drive patient engagement, build trust,
-                and grow your practice with data-driven strategies.
+                Innovare HP is a boutique studio delivering full-service
+                healthcare marketing—end-to-end solutions for brands that refuse
+                to follow.
               </motion.p>
 
               <motion.div
@@ -103,7 +104,9 @@ const HeroSection = () => {
                       className="rounded-xl px-8 py-3 text-base font-semibold shadow-lg hover:shadow-xl transition-all duration-200"
                     >
                       <Link href="/request-consultation">
-                        <span className="text-nowrap">Start Your Campaign</span>
+                        <span className="text-nowrap">
+                          Request a Consultation
+                        </span>
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
@@ -171,7 +174,7 @@ const HeroSection = () => {
 
       {/* logos section with seamless marquee */}
       <section className="bg-muted/30 py-16 md:py-24 overflow-hidden">
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-7xl px-6">
           <motion.div
             className="text-center mb-12"
             initial={{ opacity: 0, y: 18 }}
