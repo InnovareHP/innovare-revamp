@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "InnovareHP | Smarter Hospital Marketing",
     description:
       "From SEO to community outreach, InnovareHP helps hospitals attract patients and grow with a 4-step proven process.",
-    images: ["https://innovarehp.com/og-image.png"],
+    images: ["https://www.innovarehp.com/og-image.png"],
   },
 };
 

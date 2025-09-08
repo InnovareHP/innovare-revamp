@@ -61,7 +61,7 @@ const HeroSection = () => {
       </div>
 
       <section>
-        <div className="relative pt-24">
+        <div className="relative px-6 pt-24">
           <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--color-background)_75%)]" />
           <div className="mx-auto max-w-7xl">
             <motion.div
