@@ -1,9 +1,7 @@
 import { UserProvider } from "@/components/provider/app-provider";
-import { auth } from "@/lib/auth";
 import { BetterRespose, MemberAuth } from "@/lib/type";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { headers } from "next/headers";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -61,27 +59,27 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const rawHeaders = await headers();
+//   const rawHeaders = await headers();
 
-  let user: BetterRespose | null = null;
-  let member: MemberAuth | null = null;
+  const user: BetterRespose | null = null;
+  const member: MemberAuth | null = null;
 
-  try {
-    //@ts-expect-error - TODO: fix this
-    [user, member] = await Promise.all([
-      auth.api.getSession({
-        headers: rawHeaders,
-        query: {
-          disableRefresh: true,
-          disableCookieCache: true,
-        },
-      }),
-      auth.api.getActiveMember({ headers: rawHeaders }),
-    ]);
-  } catch (error) {
-    user = null;
-    member = null;
-  }
+//   try {
+//     //@ts-expect-error - TODO: fix this
+//     [user, member] = await Promise.all([
+//       auth.api.getSession({
+//         headers: rawHeaders,
+//         query: {
+//           disableRefresh: true,
+//           disableCookieCache: true,
+//         },
+//       }),
+//       auth.api.getActiveMember({ headers: rawHeaders }),
+//     ]);
+//   } catch (error) {
+//     user = null;
+//     member = null;
+//   }
 
   return (
     <html lang="en" color-scheme="light" suppressHydrationWarning>

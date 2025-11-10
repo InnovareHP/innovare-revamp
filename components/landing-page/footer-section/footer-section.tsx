@@ -1,10 +1,10 @@
 import {
-  Facebook,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Phone,
+    Facebook,
+    Instagram,
+    Linkedin,
+    Mail,
+    MapPin,
+    Phone,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,9 +38,8 @@ const ModernFooter = () => {
               </div>
 
               <p className="text-muted-foreground leading-relaxed max-w-md">
-                Transforming healthcare marketing through innovative digital
-                strategies. We help hospitals and healthcare providers build
-                meaningful patient relationships and drive sustainable growth.
+              Digital + boots-on-the-ground. Strategy + soul.
+              We create impact where healthcare decisions happen.
               </p>
             </div>
 
@@ -53,6 +52,7 @@ const ModernFooter = () => {
                   { href: "#about", label: "About Us" },
                   { href: "#services", label: "Services" },
                   { href: "#clients", label: "Clients" },
+                  { href: "#branches", label: "Branches" },
                   { href: "#team", label: "Team" },
                   { href: "/brochure", label: "Brochure" },
                   { href: "/contact-us", label: "Contact" },
@@ -121,7 +121,7 @@ const ModernFooter = () => {
                       label: "Facebook",
                     },
                     {
-                      href: "linkedin.com/company/innovarehp",
+                      href: "https://www.linkedin.com/company/innovarehp/",
                       icon: Linkedin,
                       label: "LinkedIn",
                     },

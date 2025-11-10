@@ -3,17 +3,17 @@
 import { useUser } from "@/components/provider/app-provider";
 import { Button } from "@/components/ui/button";
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
+    NavigationMenu,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
+    Sheet,
+    SheetContent,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
 } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
@@ -27,7 +27,6 @@ const Navigation = () => {
   const [open, setOpen] = useState(false); // control mobile sheet
   const pathname = usePathname();
 
-  // desktop-only scroll behavior
   useEffect(() => {
     if (typeof window === "undefined" || window.innerWidth < 768) return;
 
@@ -37,7 +36,6 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // helper: link to section whether you're on "/" or not
   const toHomeSection = (id: string) =>
     pathname === "/" ? `#${id}` : `/#${id}`;
 
@@ -47,7 +45,7 @@ const Navigation = () => {
         pathname === "/"
           ? isScrolled
             ? "bg-white shadow-sm"
-            : "bg-white sm:bg-primary"
+            : "bg-none"
           : "bg-white shadow-sm"
       }`}
     >
@@ -56,8 +54,9 @@ const Navigation = () => {
           <Image
             src="/assets/logo.png"
             alt="InnovareHP"
-            width={40}
-            height={40}
+            width={100}
+            height={100}
+            className="sm:w-full sm:h-full w-16 h-16 "
           />
         </div>
 
@@ -68,7 +67,7 @@ const Navigation = () => {
               pathname === "/"
                 ? isScrolled
                   ? "text-gray-800"
-                  : "text-white"
+                  : "text-gray-800"
                 : "text-gray-800"
             }
           >
@@ -80,7 +79,7 @@ const Navigation = () => {
                     pathname === "/"
                       ? isScrolled
                         ? "text-gray-800"
-                        : "text-white"
+                                        : "text-gray-800"
                       : "text-gray-800"
                   }`}
                 >
@@ -108,6 +107,23 @@ const Navigation = () => {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
+              <Link href={toHomeSection("branches")}>
+                <Button
+                  variant="ghost"
+                  className={`h-9 px-3 text-sm font-medium ${
+                    pathname === "/"
+                      ? isScrolled
+                        ? "text-gray-800"
+                        : "text-gray-800"
+                      : "text-gray-800"
+                  }`}
+                >
+                  Branches
+                </Button>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
               <Link href={toHomeSection("team")}>
                 <Button
                   variant="ghost"
@@ -115,7 +131,7 @@ const Navigation = () => {
                     pathname === "/"
                       ? isScrolled
                         ? "text-gray-800"
-                        : "text-white"
+                        : "text-gray-800"
                       : "text-gray-800"
                   }`}
                 >
@@ -132,7 +148,7 @@ const Navigation = () => {
                     pathname === "/"
                       ? isScrolled
                         ? "text-gray-800"
-                        : "text-white"
+                        : "text-gray-800"
                       : "text-gray-800"
                   }`}
                 >
@@ -141,7 +157,7 @@ const Navigation = () => {
               </Link>
             </NavigationMenuItem>
 
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <Link href={session ? "/callback" : "/login"}>
                 <Button
                   variant="ghost"
@@ -156,7 +172,7 @@ const Navigation = () => {
                   {session ? "Dashboard" : "Log in"}
                 </Button>
               </Link>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -178,7 +194,7 @@ const Navigation = () => {
                   width={28}
                   height={28}
                 />
-                InnovareHP
+                Innovare HP
               </SheetTitle>
             </SheetHeader>
 
@@ -204,6 +220,14 @@ const Navigation = () => {
               >
                 Clients
               </Link>
+
+              <Link
+                href={toHomeSection("branches")}
+                onClick={() => setOpen(false)}
+                className="rounded-lg px-3 py-2 text-base font-medium hover:bg-muted"
+              >
+                Branches
+              </Link>
               <Link
                 href={toHomeSection("team")}
                 onClick={() => setOpen(false)}
@@ -221,13 +245,13 @@ const Navigation = () => {
 
               <div className="h-px my-2 bg-border" />
 
-              <Link
+              {/* <Link
                 href={session ? "/callback" : "/login"}
                 onClick={() => setOpen(false)}
                 className="rounded-lg px-3 py-2 text-base font-semibold hover:bg-muted"
               >
                 {session ? "Dashboard" : "Log in"}
-              </Link>
+              </Link> */}
             </nav>
           </SheetContent>
         </Sheet>
