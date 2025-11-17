@@ -17,7 +17,7 @@ const MeetOurTeam = () => {
       id: 2,
       name: "Roy Gingrich",
       role: "Chief Finance Officer",
-      image: "/assets/team/team-photo-6-cfo.jpeg",
+      image: "/assets/team/team-photo-7-cfo.jpeg",
       socials: { linkedin: "#" },
     },
     {
