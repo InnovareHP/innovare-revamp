@@ -1,9 +1,9 @@
 "use client";
 
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
+    Carousel,
+    CarouselContent,
+    CarouselItem,
 } from "@/components/ui/carousel";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { motion } from "framer-motion";
@@ -15,11 +15,12 @@ interface Testimonial {
   role: string;
   company: string;
   quote: string;
-  headshot: string; // person photo
-  companyLogo: string; // company logo
+  headshot: string;
+  companyLogo: string;
 }
 
 const testimonials: Testimonial[] = [
+  // Existing
   {
     id: "1",
     name: "Ken Watts",
@@ -49,6 +50,148 @@ const testimonials: Testimonial[] = [
       "I truly enjoy working with Rich. His innovative approach to marketing has helped me grow my business. I highly recommend Rich for your healthcare marketing needs.",
     headshot: "/images/testimonials/suzy.jpg",
     companyLogo: "/images/logos/silvertree.png",
+  },
+
+  // Added testimonials
+  {
+    id: "4",
+    name: "Michelle Williams",
+    role: "Owner",
+    company: "Ada Grace AFC",
+    quote:
+      "Rich and his team at Innovare HP are outstanding. They designed our website and created our social media. Getting the word out is their specialty and they do it extremely well.",
+    headshot: "/images/testimonials/michelle-williams.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "5",
+    name: "Phi Nguyen",
+    role: "Owner",
+    company: "Tender Living Home",
+    quote:
+      "Rich and Cheryl are wonderful to team up with. They helped us elevate our brand and strengthen our connection to our communities.",
+    headshot: "/images/testimonials/phi.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "6",
+    name: "Brian Caulfield",
+    role: "CMO",
+    company: "Centerline Medical Billing",
+    quote:
+      "Our organization's relationship with Innovare HP is rooted in a clear increase in revenue driven by their innovative strategies, collaborative approach, and high-quality introductions.",
+    headshot: "/images/testimonials/brian.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "7",
+    name: "Jamie Palma",
+    role: "Owner",
+    company: "Via Coaching",
+    quote:
+      "Rich and his team at Innovare HP treated me like family. They listened, respected, and designed one of the most beautiful websites. Highly recommend!",
+    headshot: "/images/testimonials/jamie.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "8",
+    name: "Norma’s Haven",
+    role: "Owner",
+    company: "Norma’s Haven",
+    quote:
+      "Innovare HP helped us grow by strengthening our brand and reaching more connections. Their support made a real impact and we’re expanding with confidence.",
+    headshot: "/images/testimonials/norma.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "9",
+    name: "Darlene Brown",
+    role: "Client",
+    company: "Independent Healthcare Professional",
+    quote:
+      "I couldn’t be more impressed with their service, professionalism, and dedication. Rich and Cheryl deliver excellence from start to finish.",
+    headshot: "/images/testimonials/darlene.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "10",
+    name: "Ryan A",
+    role: "Client",
+    company: "Healthcare Industry",
+    quote:
+      "Rich and his team are fantastic—extremely talented and knowledgeable. I highly recommend them to anyone looking!",
+    headshot: "/images/testimonials/ryan.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "11",
+    name: "Charity Songer",
+    role: "Owner",
+    company: "Community Outreach",
+    quote:
+      "Rich provides a seamless experience with marketing, outreach, and connecting key players. The solutions he delivers are meaningful and results-driven.",
+    headshot: "/images/testimonials/charity.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "12",
+    name: "Josh Conrad",
+    role: "Owner",
+    company: "Conrad Signings",
+    quote:
+      "Working with Rich and Innovare has been a game-changer. His depth of knowledge and actionable strategies helped me grow in major ways.",
+    headshot: "/images/testimonials/josh.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "13",
+    name: "Erin Schultz",
+    role: "Healthcare Leader",
+    company: "Healthcare Network",
+    quote:
+      "Rich and his team bring a fresh, innovative perspective to healthcare marketing. Their passion for meaningful connections is unmatched.",
+    headshot: "/images/testimonials/erin.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "14",
+    name: "Jennylyn Conrad",
+    role: "Owner",
+    company: "Conrad Signings",
+    quote:
+      "Their Rise and Thrive event was incredible—packed with quality professionals. Innovare HP knows how to bring the right people together.",
+    headshot: "/images/testimonials/jennylyn.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "15",
+    name: "Brent M",
+    role: "Client",
+    company: "Community Development",
+    quote:
+      "Rich and his team continue to impress. I look forward to more events and collaborations!",
+    headshot: "/images/testimonials/brent.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "16",
+    name: "Eric Goodlock",
+    role: "Local Guide",
+    company: "Community Network",
+    quote:
+      "Great team at Innovare! Rich is one of the most helpful and well-connected people I know.",
+    headshot: "/images/testimonials/eric.jpg",
+    companyLogo: "/images/logos/default.png",
+  },
+  {
+    id: "17",
+    name: "Skylar Pratt",
+    role: "Client",
+    company: "Healthcare Community",
+    quote:
+      "So thankful for the network of people I’ve connected with through Innovare HP!",
+    headshot: "/images/testimonials/skylar.jpg",
+    companyLogo: "/images/logos/default.png",
   },
 ];
 

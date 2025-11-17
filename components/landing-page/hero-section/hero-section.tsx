@@ -80,14 +80,14 @@ const HeroSection = () => {
                 stand apart and stay ahead.
               </motion.h1>
 
-              <motion.p
+              {/* <motion.p
                 className="mt-8 max-w-2xl text-pretty text-xl text-muted-foreground leading-relaxed"
                 variants={fadeUp as Variants}
               >
                 Innovare HP is a boutique studio delivering full-service
                 healthcare marketing—end-to-end solutions for brands that refuse
                 to follow.
-              </motion.p>
+              </motion.p> */}
 
               <motion.div
                 className="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-4"
@@ -187,14 +187,14 @@ const HeroSection = () => {
 
             <div className="relative w-full overflow-hidden">
               <motion.div
-                className="flex w-[200%]"
+                className="flex w-[300%]"
                 aria-hidden
                 animate={{ x: ["0%", "-50%"] }}
                 transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
               >
                 {[...Array(2)].map((_, strip) => (
                   <div
-                    className="grid grid-cols-3 sm:grid-cols-5 w-full"
+                    className="grid grid-cols-3 sm:grid-cols-4 w-full"
                     key={strip}
                   >
                     {[
@@ -208,9 +208,16 @@ const HeroSection = () => {
                       "13",
                       "14",
                       "15",
+                      "16",
+                      "17",
+                      "18",
+                      "19",
+                      "20",
+                      "21",
+                      "22"
                     ].map((n) => (
                       <div
-                        className="flex items-center justify-center p-4 opacity-80 hover:opacity-100 transition-opacity"
+                        className="flex items-center justify-center p-4 opacity-80 hover:opacity-100 transition-opacity grayscale"
                         key={`${strip}-${n}`}
                       >
                         <Image
@@ -218,6 +225,7 @@ const HeroSection = () => {
                           alt="Innovare HP"
                           width={350}
                           height={350}
+                          className="grayscale"
                         />
                       </div>
                     ))}
