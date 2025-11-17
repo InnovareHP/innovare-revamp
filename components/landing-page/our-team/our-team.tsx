@@ -31,7 +31,7 @@ const MeetOurTeam = () => {
       id: 4,
       name: "Abcdef Cresencio",
       role: "Chief Information Officer",
-      image: "/assets/team/team-photo-6-wsm.jpg",
+      image: "/assets/team/team-photo-6-wsm.png",
       socials: { linkedin: "#" },
     },
     {
