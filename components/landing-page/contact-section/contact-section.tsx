@@ -72,7 +72,7 @@ const FeatureHero = () => {
           className="bg-gray-100 flex items-center justify-center rounded-lg h-full overflow-hidden"
         >
           <Image
-            src="https://innovarehp.com/images/d305eac0ee842504f0f5f93932d6c008.jpg"
+            src="https://innovarehp.com/_assets/media/7839b2b4ce2a308a07dbbd4c17f3c5bf.jpg"
             width={500}
             height={500}
             alt="Feature Graphic"

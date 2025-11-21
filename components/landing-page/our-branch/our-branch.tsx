@@ -17,7 +17,7 @@ const branches = [
       "2723 S State St UNIT 150, Ann Arbor, MI 48108, United States",
     googleLink:
       "https://www.google.com/search?kgmid=/g/11yls5sdyv&hl=en-US&q=Innovare+HP+-+Ann+Arbor&shndl=30&shem=lcuae,ptotple,shrtsdl&source=sh/x/loc/osrp/m5/3&kgs=3ef409c858d29d0d&utm_source=lcuae,ptotple,shrtsdl,sh/x/loc/osrp/m5/3",
-    image: "/assets/branch/ann-arbor.webp ",
+    image: "/assets/branch/ann-arbor.webp",
   },
 ];
 
