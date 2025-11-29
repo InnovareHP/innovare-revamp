@@ -101,7 +101,7 @@ const HeroSection = () => {
             viewport={{ once: true, amount: 0.4 }}
           >
             <p className="text-lg font-medium text-muted-foreground mb-6">
-              Trusted by leading healthcare organizations
+              Who We Collaborate With
             </p>
 
             <div className="relative w-full overflow-hidden">
