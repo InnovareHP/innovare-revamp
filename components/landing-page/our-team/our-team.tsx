@@ -29,7 +29,7 @@ const MeetOurTeam = () => {
     {
       id: 4,
       name: "Abcdef Cresencio",
-      role: "Chief Information Officer",
+      role: "IT & Web Systems Manager",
       image: "/assets/team/team-photo-6-wsm.png",
       socials: { linkedin: "#" },
     },
@@ -43,8 +43,15 @@ const MeetOurTeam = () => {
     {
       id: 6,
       name: "Amy Cunningham",
-      role: "Outreach Manager",
+      role: "Regional Brand and Relationship Manager",
       image: "/assets/team/team-photo-8-cod.png",
+      socials: { linkedin: "#" },
+    },
+    {
+      id: 7,
+      name: "Tracy Lorenz",
+      role: "Regional Brand and Relationship Manager",
+      image: "/assets/team/team-photo-#-cod.png",
       socials: { linkedin: "#" },
     },
   ];
@@ -68,15 +75,23 @@ const MeetOurTeam = () => {
               viewport={{ once: true }}
               className="group relative"
             >
-              <div className="relative overflow-hidden bg-none hover:bg-gray-200 transition-all duration-300 rounded-lg mb-6">
-                <Image
-                  src={member.image}
-                  alt={`${member.name}, ${member.role}`}
-                  width={500}
-                  height={500}
-                  loading="lazy"
-                  className="w-full h-[400px] object-cover object-top rounded-lg transition-transform duration-300 group-hover:scale-105 filter grayscale"
-                />
+              <div className="relative overflow-hidden bg-gray-300 hover:bg-gray-200 transition-all duration-300 rounded-lg mb-6">
+                {member.name === "Tracy Lorenz" ? (
+                  <div className="w-full h-[400px] bg-gray-400 rounded-lg flex items-center justify-center">
+                    <span className="text-gray-600 text-lg font-medium">
+                      Tracy Lorenz
+                    </span>
+                  </div>
+                ) : (
+                  <Image
+                    src={member.image}
+                    alt={`${member.name}, ${member.role}`}
+                    width={500}
+                    height={500}
+                    loading="lazy"
+                    className="w-full h-[400px] object-cover object-top rounded-lg transition-transform duration-300 group-hover:scale-105 filter grayscale"
+                  />
+                )}
               </div>
 
               <div className="text-center">
