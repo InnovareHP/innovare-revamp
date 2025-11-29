@@ -134,6 +134,9 @@ const HeroSection = () => {
                       "20",
                       "21",
                       "22",
+                      "23",
+                      "24",
+                      "25",
                     ].map((n) => (
                       <div
                         className="flex items-center justify-center p-4 opacity-80 hover:opacity-100 transition-opacity grayscale"
