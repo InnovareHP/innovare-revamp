@@ -1,10 +1,10 @@
 import {
-    Facebook,
-    Instagram,
-    Linkedin,
-    Mail,
-    MapPin,
-    Phone,
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,28 +18,23 @@ const ModernFooter = () => {
             <div className="lg:col-span-2 space-y-6">
               <div className="flex items-center gap-4">
                 <Link href="/" className="shrink-0" aria-label="Home">
-                  <div className="relative">
-                    <Image
-                      src="/assets/logo.png"
-                      alt="InnovareHP"
-                      width={56}
-                      height={56}
-                      className="rounded-xl shadow-sm"
-                      priority
-                    />
-                    <div className="absolute inset-0 rounded-xl ring-1 ring-black/5"></div>
-                  </div>
+                  <Image
+                    src="/assets/logo.png"
+                    alt="InnovareHP"
+                    width={56}
+                    height={56}
+                    priority
+                  />
                 </Link>
                 <div>
                   <h3 className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-                    InnovareHP
+                    Innovare HP
                   </h3>
                 </div>
               </div>
 
               <p className="text-muted-foreground leading-relaxed max-w-md">
-              Digital + boots-on-the-ground. Strategy + soul.
-              We create impact where healthcare decisions happen.
+                High Precision Healthcare Marketing
               </p>
             </div>
 
@@ -54,8 +49,6 @@ const ModernFooter = () => {
                   { href: "#clients", label: "Clients" },
                   { href: "#branches", label: "Branches" },
                   { href: "#team", label: "Team" },
-                  { href: "/brochure", label: "Brochure" },
-                  { href: "/contact-us", label: "Contact" },
                 ].map((link) => (
                   <Link
                     key={link.href}
@@ -155,7 +148,7 @@ const ModernFooter = () => {
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
               <p>
-                © {new Date().getFullYear()} InnovareHP. All rights reserved.
+                © {new Date().getFullYear()} Innovare HP. All rights reserved.
               </p>
             </div>
           </div>
