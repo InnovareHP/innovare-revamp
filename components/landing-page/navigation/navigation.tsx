@@ -1,186 +1,74 @@
 "use client";
 
-import { useUser } from "@/components/provider/app-provider";
-import { Button } from "@/components/ui/button";
 import {
-    NavigationMenu,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import {
-    Sheet,
-    SheetContent,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Navigation = () => {
-  const { session } = useUser();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [open, setOpen] = useState(false); // control mobile sheet
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    if (typeof window === "undefined" || window.innerWidth < 768) return;
-
-    const handleScroll = () => setIsScrolled(window.scrollY > 100);
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const toHomeSection = (id: string) =>
     pathname === "/" ? `#${id}` : `/#${id}`;
 
+  const navItems = [
+    { label: "Home", href: "/" },
+    { label: "Services", href: toHomeSection("services") },
+    { label: "Clients", href: toHomeSection("clients") },
+    { label: "Branches", href: toHomeSection("branches") },
+    { label: "Team", href: toHomeSection("team") },
+    { label: "Contact Us", href: toHomeSection("contact-us") },
+  ];
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 max-w-2xl mx-auto rounded-b-2xl transition-colors duration-300 ${
-        pathname === "/"
-          ? isScrolled
-            ? "bg-white shadow-sm"
-            : "bg-none"
-          : "bg-white shadow-sm"
-      }`}
-    >
-      <div className="mx-auto max-w-5xl flex items-center justify-between md:justify-center px-6 py-4">
+    <nav>
+      <div className="relative z-50 flex items-center justify-between md:justify-between px-6 py-4 border-b">
         <div className="flex items-center space-x-2">
           <Image
             src="/assets/logo.png"
             alt="InnovareHP"
             width={100}
             height={100}
-            className="sm:w-full sm:h-full w-16 h-16 "
+            className="sm:w-full sm:h-16 w-12 h-12"
           />
         </div>
 
-        {/* Desktop nav */}
         <NavigationMenu className="hidden md:block">
-          <NavigationMenuList
-            className={
-              pathname === "/"
-                ? isScrolled
-                  ? "text-gray-800"
-                  : "text-gray-800"
-                : "text-gray-800"
-            }
-          >
-            <NavigationMenuItem>
-              <Link href="/">
-                <Button
-                  variant="ghost"
-                  className={`h-9 px-3 text-sm font-medium ${
-                    pathname === "/"
-                      ? isScrolled
-                        ? "text-gray-800"
-                                        : "text-gray-800"
-                      : "text-gray-800"
-                  }`}
-                >
-                  Home
-                </Button>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                href={toHomeSection("services")}
-                className="text-sm font-medium"
-              >
-                Services
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuLink
-                href={toHomeSection("clients")}
-                className="text-sm font-medium"
-              >
-                Clients
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href={toHomeSection("branches")}>
-                <Button
-                  variant="ghost"
-                  className={`h-9 px-3 text-sm font-medium ${
-                    pathname === "/"
-                      ? isScrolled
-                        ? "text-gray-800"
-                        : "text-gray-800"
-                      : "text-gray-800"
-                  }`}
-                >
-                  Branches
-                </Button>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href={toHomeSection("team")}>
-                <Button
-                  variant="ghost"
-                  className={`h-9 px-3 text-sm font-medium ${
-                    pathname === "/"
-                      ? isScrolled
-                        ? "text-gray-800"
-                        : "text-gray-800"
-                      : "text-gray-800"
-                  }`}
-                >
-                  Team
-                </Button>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href="/brochure">
-                <Button
-                  variant="ghost"
-                  className={`h-9 px-3 text-sm font-medium ${
-                    pathname === "/"
-                      ? isScrolled
-                        ? "text-gray-800"
-                        : "text-gray-800"
-                      : "text-gray-800"
-                  }`}
-                >
-                  Brochure
-                </Button>
-              </Link>
-            </NavigationMenuItem>
-
-            {/* <NavigationMenuItem>
-              <Link href={session ? "/callback" : "/login"}>
-                <Button
-                  variant="ghost"
-                  className={`h-9 px-3 text-sm font-medium ${
-                    pathname === "/"
-                      ? isScrolled
-                        ? "text-gray-800"
-                        : "text-white"
-                      : "text-gray-800"
-                  }`}
-                >
-                  {session ? "Dashboard" : "Log in"}
-                </Button>
-              </Link>
-            </NavigationMenuItem> */}
+          <NavigationMenuList className="text-gray-800">
+            {navItems.map((item) => (
+              <NavigationMenuItem key={item.label} asChild>
+                <NavigationMenuLink asChild>
+                  <Link
+                    href={item.href}
+                    className="text-sm font-medium hover:text-blue-600 duration-200"
+                  >
+                    {item.label}
+                  </Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            ))}
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Mobile nav */}
+        {/* Mobile Navigation */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <button className="block md:hidden p-2" aria-label="Open menu">
-              {/* Mobile navbar background is white, keep icon dark for contrast */}
               <MenuIcon className="w-6 h-6 text-gray-900" />
             </button>
           </SheetTrigger>
@@ -199,59 +87,16 @@ const Navigation = () => {
             </SheetHeader>
 
             <nav className="flex flex-col gap-1">
-              <Link
-                href="/"
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-base font-medium hover:bg-muted"
-              >
-                Home
-              </Link>
-              <Link
-                href={toHomeSection("services")}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-base font-medium hover:bg-muted"
-              >
-                Services
-              </Link>
-              <Link
-                href={toHomeSection("clients")}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-base font-medium hover:bg-muted"
-              >
-                Clients
-              </Link>
-
-              <Link
-                href={toHomeSection("branches")}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-base font-medium hover:bg-muted"
-              >
-                Branches
-              </Link>
-              <Link
-                href={toHomeSection("team")}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-base font-medium hover:bg-muted"
-              >
-                Team
-              </Link>
-              <Link
-                href="/brochure"
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-base font-medium hover:bg-muted"
-              >
-                Brochure
-              </Link>
-
-              <div className="h-px my-2 bg-border" />
-
-              {/* <Link
-                href={session ? "/callback" : "/login"}
-                onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-base font-semibold hover:bg-muted"
-              >
-                {session ? "Dashboard" : "Log in"}
-              </Link> */}
+              {navItems.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2 text-base font-medium hover:bg-muted"
+                >
+                  {item.label}
+                </Link>
+              ))}
             </nav>
           </SheetContent>
         </Sheet>
