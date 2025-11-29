@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import CtaStayInTouch from "../cta-stay-in-touch/cta-stay-in-touch";
 
 const MeetOurTeam = () => {
   const teamMembers = [
@@ -46,16 +45,17 @@ const MeetOurTeam = () => {
       name: "Amy Cunningham",
       role: "Outreach Manager",
       image: "/assets/team/team-photo-8-cod.png",
-      socials: { linkedin:"#" },
+      socials: { linkedin: "#" },
     },
   ];
 
   return (
     <section id="team" className="py-20 bg-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">Our Team</h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            Our Team
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
@@ -68,9 +68,7 @@ const MeetOurTeam = () => {
               viewport={{ once: true }}
               className="group relative"
             >
-              <div
-                className="relative overflow-hidden bg-none hover:bg-gray-200 transition-all duration-300 rounded-lg mb-6"
-              >
+              <div className="relative overflow-hidden bg-none hover:bg-gray-200 transition-all duration-300 rounded-lg mb-6">
                 <Image
                   src={member.image}
                   alt={`${member.name}, ${member.role}`}
@@ -93,8 +91,6 @@ const MeetOurTeam = () => {
           ))}
         </div>
       </div>
-
-      <CtaStayInTouch />
     </section>
   );
 };
