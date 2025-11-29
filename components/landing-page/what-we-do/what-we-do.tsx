@@ -1,10 +1,10 @@
 "use client";
 
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { motion } from "framer-motion";
 
@@ -32,7 +32,17 @@ const services = [
   {
     title: "BESPOKE CAMPAIGNS DESIGNED FOR YOUR MARKET & METRICS",
     description:
-      "No templates. No recycled ideas. Every campaign is purpose-built to match your goals, audience, region, and growth stage. We blend strategy, creativity, and market intelligence to produce campaigns that don’t just look good — they move the needle. Your mission is unique. Your marketing should be too.",
+      "No templates. No recycled ideas. Every campaign is purpose-built to match your goals, audience, region, and growth stage. We blend strategy, creativity, and market intelligence to produce campaigns that don't just look good — they move the needle. Your mission is unique. Your marketing should be too.",
+  },
+  {
+    title: "TRADITIONAL AND DIGITAL STRATEGIES",
+    description:
+      "We combine proven traditional marketing methods with modern digital channels to create integrated campaigns that reach patients where they are. From print media and community engagement to SEO and targeted digital ads, we ensure your healthcare message resonates across every touchpoint.",
+  },
+  {
+    title: "MARKETING TRAINING AND COACHING",
+    description:
+      "We empower your team with the knowledge and tools to sustain and scale your marketing efforts. Through strategic workshops, digital marketing fundamentals, and best practices training, we build internal capabilities that transform your staff into confident marketing champions.",
   },
 ];
 
@@ -55,7 +65,7 @@ export default function WhatWeDo() {
               value={`item-${index}`}
               className="border-b border-sky-500"
             >
-              <AccordionTrigger className="text-2xl font-medium hover:text-sky-500 transition-colors">
+              <AccordionTrigger className="text-2xl font-medium hover:text-sky-500 transition-colors cursor-pointer">
                 {item.title}
               </AccordionTrigger>
               <AccordionContent>
