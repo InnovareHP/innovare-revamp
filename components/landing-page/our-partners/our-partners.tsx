@@ -24,7 +24,7 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: "1",
-    name: "Ken Watts",
+    name: "Ken W.",
     role: "Owner/Founder",
     company: "Helping with Mom's Home",
     quote:
@@ -38,7 +38,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "2",
-    name: "Nadine Carlson",
+    name: "Nadine C.",
     role: "Owner/Founder",
     company: "Care Provider Solutions",
     quote:
@@ -51,7 +51,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "3",
-    name: "Suzy Posluszny",
+    name: "Suzy P.",
     role: "Owner/Founder",
     company: "SilverTree Memory Partners",
     quote:
@@ -64,7 +64,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "4",
-    name: "Michelle Williams",
+    name: "Michelle W.",
     role: "Owner",
     company: "Ada Grace AFC",
     quote:
@@ -77,7 +77,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "5",
-    name: "Phi Nguyen",
+    name: "Phi N.",
     role: "Owner",
     company: "Tender Living Home",
     quote:
@@ -89,7 +89,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "6",
-    name: "Brian Caulfield",
+    name: "Brian C.",
     role: "CMO",
     company: "Centerline Medical Billing",
     quote:
@@ -103,7 +103,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "7",
-    name: "Jamie Palma",
+    name: "Jamie P.",
     role: "Owner",
     company: "Via Coaching",
     quote:
@@ -116,7 +116,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "8",
-    name: "Norma's Haven",
+    name: "Leah N.",
     role: "Owner",
     company: "Norma's Haven",
     quote:
@@ -129,7 +129,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "9",
-    name: "Darlene Brown",
+    name: "Darlene B.",
     role: "Client",
     company: "Independent Healthcare Professional",
     quote:
@@ -142,7 +142,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "10",
-    name: "Ryan A",
+    name: "Ryan A.",
     role: "Client",
     company: "Healthcare Industry",
     quote:
@@ -155,7 +155,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "11",
-    name: "Charity Songer",
+    name: "Charity S.",
     role: "Owner",
     company: "Community Outreach",
     quote:
@@ -168,7 +168,7 @@ const testimonials: Testimonial[] = [
   },
   {
     id: "12",
-    name: "Josh Conrad",
+    name: "Josh C.",
     role: "Owner",
     company: "Conrad Signings",
     quote:
