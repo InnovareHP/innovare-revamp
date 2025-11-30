@@ -56,7 +56,7 @@ const FeatureHero = () => {
           >
             <Link href="/get-in-touch">
               <Button className="group">
-                Request a Consultation
+                Work with us
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>

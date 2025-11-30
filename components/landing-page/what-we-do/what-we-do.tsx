@@ -34,11 +34,7 @@ const services = [
     description:
       "No templates. No recycled ideas. Every campaign is purpose-built to match your goals, audience, region, and growth stage. We blend strategy, creativity, and market intelligence to produce campaigns that don't just look good — they move the needle. Your mission is unique. Your marketing should be too.",
   },
-  {
-    title: "TRADITIONAL AND DIGITAL STRATEGIES",
-    description:
-      "We combine proven traditional marketing methods with modern digital channels to create integrated campaigns that reach patients where they are. From print media and community engagement to SEO and targeted digital ads, we ensure your healthcare message resonates across every touchpoint.",
-  },
+
   {
     title: "MARKETING TRAINING AND COACHING",
     description:

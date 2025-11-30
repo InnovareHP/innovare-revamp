@@ -43,14 +43,14 @@ const MeetOurTeam = () => {
     {
       id: 6,
       name: "Amy Cunningham",
-      role: "Regional Brand and Relationship Manager",
+      role: "Regional Brand & Relationship Manager (Kalamazoo)",
       image: "/assets/team/team-photo-8-cod.png",
       socials: { linkedin: "#" },
     },
     {
       id: 7,
       name: "Tracy Lorenz",
-      role: "Regional Brand and Relationship Manager",
+      role: "Regional Brand & Relationship Manager (Grand Rapids)",
       image: "/assets/team/team-photo-#-cod.png",
       socials: { linkedin: "#" },
     },
