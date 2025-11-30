@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 
 // === Types & Data ===
 interface Testimonial {
@@ -295,6 +296,68 @@ const TestimonialCard = ({ t }: { t: Testimonial }) => {
 };
 
 const OurPartners = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Handle scroll to update active index
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const handleScroll = () => {
+      const container = scrollContainer;
+      const scrollLeft = container.scrollLeft;
+      const containerWidth = container.clientWidth;
+      const scrollCenter = scrollLeft + containerWidth / 2;
+
+      // Find which card is currently centered
+      let closestIndex = 0;
+      let closestDistance = Infinity;
+
+      cardRefs.current.forEach((card, index) => {
+        if (card) {
+          const cardLeft = card.offsetLeft;
+          const cardWidth = card.offsetWidth;
+          const cardCenter = cardLeft + cardWidth / 2;
+          const distance = Math.abs(scrollCenter - cardCenter);
+
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestIndex = index;
+          }
+        }
+      });
+
+      setActiveIndex(closestIndex);
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+    handleScroll(); // Initial check
+
+    return () => {
+      scrollContainer.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Handle pagination click
+  const handlePaginationClick = (index: number) => {
+    const card = cardRefs.current[index];
+    const scrollContainer = scrollContainerRef.current;
+
+    if (card && scrollContainer) {
+      const cardLeft = card.offsetLeft;
+      const containerWidth = scrollContainer.clientWidth;
+      const cardWidth = card.offsetWidth;
+      const scrollPosition = cardLeft - (containerWidth - cardWidth) / 2;
+
+      scrollContainer.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <section id="clients" className="bg-gray-50 py-20 overflow-hidden">
       <style
@@ -330,7 +393,25 @@ const OurPartners = () => {
           Real results from healthcare partners who trust our marketing
           approach.
         </p>
-        <div className="mt-8 flex items-center justify-center gap-2">
+        {/* Mobile: Pagination Indicators */}
+        <div className="mt-8 flex items-center justify-center gap-2 md:hidden">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePaginationClick(index)}
+              className="transition-all duration-300 focus:outline-none"
+              aria-label={`Go to testimonial ${index + 1}`}
+            >
+              <div
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  index === activeIndex ? "bg-blue-500 w-12" : "bg-gray-300 w-3"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+        {/* Desktop: Static Decoration */}
+        <div className="mt-8 hidden md:flex items-center justify-center gap-2">
           <div className="h-1 w-12 bg-blue-500 rounded-full"></div>
           <div className="h-1 w-8 bg-gray-300 rounded-full"></div>
           <div className="h-1 w-4 bg-gray-300 rounded-full"></div>
@@ -346,6 +427,7 @@ const OurPartners = () => {
       >
         {/* Mobile: Horizontal Scroll */}
         <div
+          ref={scrollContainerRef}
           className="md:hidden overflow-x-auto -mx-6 px-6 pb-4 mobile-scroll-container"
           style={{
             scrollbarWidth: "none",
@@ -356,9 +438,12 @@ const OurPartners = () => {
           }}
         >
           <div className="flex gap-4" style={{ width: "max-content" }}>
-            {testimonials.map((t) => (
+            {testimonials.map((t, index) => (
               <div
                 key={t.id}
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
                 className="w-[85vw] max-w-sm flex-shrink-0"
                 style={{ minWidth: "320px" }}
               >
