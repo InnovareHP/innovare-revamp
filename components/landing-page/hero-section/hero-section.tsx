@@ -92,7 +92,7 @@ const HeroSection = () => {
       </section>
 
       {/* Logos Section (unchanged unless you want edits) */}
-      <section className="bg-muted/30 py-16 md:py-24 overflow-hidden">
+      <section className="bg-gray-300 py-16 md:py-24 overflow-hidden">
         <div className="mx-auto max-w-7xl px-6">
           <motion.div
             className="text-center mb-12"
